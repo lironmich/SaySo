@@ -1,0 +1,26 @@
+.user-subtitles-input {
+}
+
+.user-subtitles-input > div {
+    margin: 10px;
+}
+
+.user-subtitles-input > div > span {
+    display: inline-block;
+    width: 150px;
+}
+
+.user-subtitles-input > div > div {
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+}
+
+.user-subtitles-input .lang-input {
+    width: 30px;
+}
+
+.user-subtitles-input .url-input {
+    width: 400px;
+    vertical-align: top;
+}

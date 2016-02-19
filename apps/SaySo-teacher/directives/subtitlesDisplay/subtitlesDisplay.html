@@ -1,0 +1,22 @@
+<div class="subtitles-display">
+
+    <div class="header">
+        <span>row</span>
+        <span>source</span>
+        <span>target</span>
+        <span>from</span>
+        <span>to</span>
+    </div>
+
+    <div class="body-container">
+        <div class="body"
+             ng-repeat="text in subtitles.text track by $index">
+            <span ng-bind="$index"></span>
+            <span ng-bind="text.source"></span>
+            <span ng-bind="text.target"></span>
+            <span ng-bind="text.from"></span>
+            <span ng-bind="text.to"></span>
+        </div>
+    </div>
+
+</div>

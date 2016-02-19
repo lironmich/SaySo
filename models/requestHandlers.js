@@ -17,7 +17,7 @@ function defaultHandler(response, filePath){
 			break;
 	}
 
-	// testpath = "./public/apps/SaySo-client/freelancer-mobile/partials/1";
+	// testpath = "./apps/SaySo-client/freelancer-mobile/partials/1";
 	
 	fs.readFile(filePath, function(error, content) {
 		if (error) {

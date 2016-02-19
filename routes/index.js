@@ -13,7 +13,7 @@ module.exports = function(app, passport) {
 	//	//res.render('GeneralPartials/index.ejs', { message: req.flash('loginMessage') });
 	//});
 
-	app.get('/public/*', function(req, res) {
+	app.get('/apps/*', function(req, res) {
 		var path = "." + url.parse(req.url).pathname;
 		RequestHandler.defaultHandler(res, path);
 	});
@@ -79,150 +79,6 @@ module.exports = function(app, passport) {
 			console.log ('/api/cards/card:cardid : req.params.cardid  ' + req.params.cardid);
 		})
 
-	function oldCard() {
-		//app.get('/nextcard', function(req, res) {
-		//		if(sess.ids){
-		//			var cards = sess.ids.split(',');
-		//			console.log('\n\n\n sess.ids : ' + sess.ids);
-		//
-		//			var randid = cards[ parseInt(cards.length * Math.random())];
-		//			if (randid == req.params.card_id){
-		//				var randid = cards[cards.length];
-		//			}
-		//
-		//			var newurl = '/card?id=' + randid.toString() + '&face=0';
-		//			res.redirect(newurl);
-		//		}
-		//});
-
-		//// GET card
-		//app.get('/card', function(req, res) {
-		//	data = JSONAPI.JSONGet(req.param('id'), req.param('face'));
-		//	res.render('record.ejs', { 'cardID' : req.param('id'), 'dataText' : data["faceText"],
-		//		 'dataSymbol' : data["faceSymbol"], 'faceRight' : (parseInt( req.param('face')) + 1),
-		//		 'faceLeft' : (parseInt( req.param('face')) - 1) });
-		//});
-		//
-		//
-		//app.route('/card:card_id/face:ordernum')
-		//		.get(function(req, res) {
-		//			id = req.params.card_id;
-		//			ordernum = req.params.ordernum;
-		//			console.log("ordernum : " + ordernum);
-		//			res.json(data.jsonGetFaceCard(id, ordernum));
-		//		})
-		//
-		//app.route('/card:card_id')
-		//
-		//		.get(function(req, res) {
-		//			id = req.params.card_id;
-		//			console.log("id " + id);
-		//			res.json(data.jsonGetCardById(id));
-		//		})
-		//
-		//
-		//app.route('/Lesson:Lesson_id')
-		//
-		//		.get(function(req, res) {
-		//			id = req.params.Lesson_id;
-		//			res.json(data.jsonGetLesson(id));
-		//		})
-		//
-		//		.put(function(req, res) {
-		//			console.log('put function');
-		//		})
-		//
-		//		.delete(function(req, res) {
-		//			console.log('delete function');
-		//		})
-		//
-		//		.post(function(req, res) {
-		//			console.log('post function');
-		//		})
-		//
-		//app.route('/Curriculum:Curriculum_id')
-		//
-		//		.get(function(req, res) {
-		//
-		//			id = req.params.Curriculum_id;
-		//			res.json(data.jsonGetCuriculum(id));
-		//		})
-		//
-		//		.put(function(req, res) {
-		//			console.log('put function');
-		//		})
-		//
-		//		.delete(function(req, res) {
-		//			console.log('delete function');
-		//		})
-		//
-		//		.post(function(req, res) {
-		//			console.log('post function');
-		//		})
-		//
-		//
-		//app.route('/Curriculum:Curriculum_id/Lesson:Lesson_id/card:card_id')
-		//
-		//		.get(function(req, res) {
-		//			id = req.params.card_id;
-		//			res.json(data.jsonGetCard(id));
-		//		})
-		//
-		//		.put(function(req, res) {
-		//			console.log('put function');
-		//		})
-		//
-		//		.delete(function(req, res) {
-		//			console.log('delete function');
-		//		})
-		//
-		//		.post(function(req, res) {
-		//			console.log('post function');
-		//		})
-		//
-		//
-		//
-		//app.route('/Curriculum:Curriculum_id/Lesson:Lesson_id/card:card_id/face:symbol')
-		//
-		//		.get(function(req, res) {
-		//
-		//			res.json("");
-		//		})
-		//
-		//		.put(function(req, res) {
-		//			console.log('put function');
-		//		})
-		//
-		//		.delete(function(req, res) {
-		//			console.log('delete function');
-		//		})
-		//
-		//		.post(function(req, res) {
-		//			console.log('post function');
-		//		})
-		//
-		//
-		//app.route('/menu')
-		//		.get (function(req, res) {
-		//			res.render('menu.ejs');
-		//		})
-		//
-		//		.post (function(req, res, next) {
-		//			console.log('req to / : ' + req.body.ids);
-		//			// write id's to session
-		//			// make card navigation between those marked
-		//			sess=req.session;
-		//			sess.ids = req.body.ids.toString();
-		//
-		//			// data.MoveCardToLesson('1135es', req.body.ids.toString());
-		//			res.redirect('/nextcard');
-		//		})
-		//
-		//app.get('/Guest', function(req, res) {
-		//	res.redirect('/menu');
-		//});
-	}
-
 	// Auth
 	function minAuth() {
 		/* GET home page - menu. */
@@ -276,8 +132,5 @@ module.exports = function(app, passport) {
 		//app.get('/carddb.json', function(req, res) {
 		//	res.json(data.MenuTreeGet()); // change to api call
 		//});
-
 	}
-
-
 };

@@ -1,0 +1,17 @@
+<div class="teacher-manager">
+    <video-search video-id="videoId"/>
+    </video-search>
+
+    <youtube-player ng-if="videoId"
+                    video-id="videoId">
+    </youtube-player>
+
+    <user-subtitles-input ng-if="videoId"
+                          video-id="videoId"
+                          subtitles="subtitles">
+    </user-subtitles-input>
+
+    <subtitles-display ng-if="subtitles.text.length > 0"
+            subtitles="subtitles">
+    </subtitles-display>
+</div>

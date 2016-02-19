@@ -1,0 +1,11 @@
+<div class="subtitles align-center" ng-class="{'colors': showColors}">
+    <p ng-bind-html="l[transcription ? 1 : 0]" ng-click="click($event)"></p>
+    <p ng-mouseenter="showColors = true" ng-mouseleave="showColors = false">
+        <span ng-if="!showColors && l[2]">
+            <span class="xs-hide">Hover</span>
+            <span class="l-hide m-hide s-hide">Tap</span>
+            for {{translation | language}}
+        </span>
+        <span ng-if="showColors" ng-bind-html="l[2]"></span>
+    </p>
+</div>

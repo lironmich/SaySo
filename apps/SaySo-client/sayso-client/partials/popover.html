@@ -1,0 +1,43 @@
+<div class="popover content-align-center" ng-click="popover.hide($event)">
+    <section class="popover-dialog col">
+        <header class="popover-dialog-header row xs-hide">
+            <h1 class="fill align-center">{{popover.movie.movieName}}</h1>
+            <button class="popover-dialog-close" ng-click="popover.hide()">&times;</button>
+        </header>
+        <main class="popover-dialog-body fill row xs-col-reverse align-stretch">
+            <header class="popover-dialog-details l-hide m-hide s-hide align-center">
+                <h1>{{popover.movie.movieName}}</h1>
+                <span>Languages: {{popover.movie.sourceLanguage}}, {{popover.movie.targetLanguage}} | Level {{popover.movie.level}}</span>
+            </header>
+            <nav class="popover-dialog-menu">
+                <ul class="xs-row">
+                    <li ng-repeat="tab in popover.tabs"
+                        ng-class="{'active': tab === popover.activeTab, 'before-active': popover.tabs[$index+1] === popover.activeTab}"
+                    >{{::tab.text}}<span class="chevron"><i></i></span></li>
+                    <div class="fill">&nbsp;</div>
+                </ul>
+            </nav>
+            <section class="fill">
+                <video id="video" controls preload="none" mediagroup="sayso" poster="http://media.w3.org/2010/05/sintel/poster.png" width="100%">
+                    <source id="mp4" src="http://media.w3.org/2010/05/sintel/trailer.mp4" type="video/mp4">
+                    <source id="webm" src="http://media.w3.org/2010/05/sintel/trailer.webm" type="video/webm">
+                    <source id="ogv" src="http://media.w3.org/2010/05/sintel/trailer.ogv" type="video/ogg">
+                    <p>Your user agent does not support the HTML5 Video element.</p>
+                </video>
+                <subtitles subtitles="popover.subtitles"
+                           translation="popover.translation"
+                           name="popover.movie.movieName"
+                           mediagroup="sayso"
+                           ng-mouseover="popover.pause()"
+                           ng-mouseleave="popover.resume()"
+                ></subtitles>
+            </section>
+        </main>
+        <footer class="popover-dialog-footer row">
+            <span class="color0 l-hide m-hide s-hide">{{popover.movie.category}} &gt;&gt;</span>
+            <span class="xs-hide">Languages: {{popover.movie.sourceLanguage}}, {{popover.movie.targetLanguage}} | Level {{popover.movie.level}}</span>
+            <span class="fill align-right"><i class="fa fa-heart"></i> {{popover.movie.likesCount}}</span>
+            <span class="fill"><i class="fa fa-eye"></i> {{popover.movie.viewsCount}}</span>
+        </footer>
+    </section>
+</div>

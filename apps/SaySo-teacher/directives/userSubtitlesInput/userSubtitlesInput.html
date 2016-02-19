@@ -1,0 +1,41 @@
+<div class="user-subtitles-input">
+    <div>
+        <span>
+            source lang:
+        </span>
+
+        <input ng-model="subtitles.sourceLang"
+               ng-model-options="{debounce: 500}"
+               class="lang-input"
+               maxlength="3"/>
+    </div>
+
+    <div>
+       <span>
+           target lang:
+       </span>
+
+        <input ng-model="subtitles.targetLang"
+               ng-model-options="{debounce: 500}"
+               class="lang-input"
+               maxlength="3"/>
+    </div>
+
+    <div ng-show="subtitles.sourceLang && subtitles.targetLang">
+        <span>
+            how to download youtube transcript:
+        </span>
+
+        <div>
+            to find youtube subtitles url
+            open developer tools (F12) -> network.
+            start the video show the subtitles.
+            find 'timedtext' in the network section
+            and copy the url.
+        </div>
+
+        <input ng-model="youtubeSubtitlesUrl"
+               ng-model-options="{debounce: 500}"
+               class="url-input"/>
+    </div>
+</div>

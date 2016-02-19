@@ -1,0 +1,80 @@
+<header class="page-header" ng-class="{'has-back': main.isPopoverVisible, 'list-view': main.isListVisible}">
+    <div class="row container">
+        <button class="back-button l-hide m-hide s-hide"
+                ng-show="main.isPopoverVisible"
+                ng-click="main.closePopover()"><i></i></button>
+        <span class="search xs-hide">
+            <input type="text"
+                   placeholder="Search..."
+                   ng-model="main.search"
+                   ng-keypress="main.searchKeyPress($event)"
+                   ng-blur="main.searchBlur()">
+            <button><i class="fa fa-search"></i></button>
+        </span>
+        <span class="fill align-center title">&middot; <title>SaySo</title> &middot;</span>
+        <a class="link xs-hide">About</a>
+        <button class="list l-hide m-hide s-hide"
+                ng-click="main.showList()"
+                ng-class="{'xs-hide': main.isPopoverVisible || main.isListVisible}"
+        ><i class="fa fa-th-list"></i></button>
+    </div>
+</header>
+<main class="page-body" ng-class="{'xs-hide': main.isPopoverVisible}">
+    <div class="container" ng-class="{'list-view': main.isListVisible}">
+        <h1 class="align-center xs-hide">
+            <span class="color0">&ldquo;Hola!</span>
+            <span class="color1">como</span>
+            <span class="color2">se</span>
+            <span class="color3">hace?&rdquo;</span>
+        </h1>
+        <h2 class="align-center xs-hide">
+            that&rsquo;s
+            <span class="color0">&ldquo;Hello!</span>
+            <span class="color2">How</span>
+            <span class="color3">do</span>
+            <span class="color1">you</span>
+            <span class="color3">do?&rdquo;</span>
+            in Spanish
+        </h2>
+        <div class="columns">
+            <div class="search" ng-show="main.isListVisible">
+                <input type="text"
+                       placeholder="Search..."
+                       ng-model="main.search"
+                       ng-keypress="main.searchKeyPress($event)"
+                       ng-blur="main.searchBlur()">
+            </div>
+            <nav class="order-by" ng-class="{'xs-hide': !main.isListVisible}">
+                <h3>SORT BY <span ng-hide="main.isListVisible">&gt;&gt;</span></h3>
+                <ul>
+                    <li ng-repeat="orderByOption in main.orderByOptions track by $index"
+                        ng-class="{'active': orderByOption === main.orderBySelectedOption}"
+                        ng-click="main.orderBy(orderByOption)">{{::orderByOption.text}}</li>
+                </ul>
+            </nav>
+            <nav class="categories" ng-class="{'xs-hide': !main.isListVisible}">
+                <h3>SHOW <span ng-hide="main.isListVisible">&gt;&gt;</span></h3>
+                <ul>
+                    <li ng-repeat="category in main.categories track by $index"
+                        ng-class="{'active': main.isCategorySelected(category)}"
+                        ng-click="main.toggleCategory(category)">{{::category.text}}</li>
+                </ul>
+            </nav>
+            <card ng-repeat="movie in main.movies | filter : main.search track by $index"
+                  ng-click="main.showPopover(movie)"
+                  ng-hide="main.isListVisible"
+                  image="{{::movie.imageUrl}}"
+                  category="{{::movie.category}}"
+                  title="{{::movie.movieName}}"
+                  languages="{{::movie.sourceLanguage}}, {{::movie.targetLanguage}}"
+                  level = "{{::movie.level}}"
+                  likes = "{{::movie.likesCount}}"
+                  views = "{{::movie.viewsCount}}"
+            ></card>
+        </div>
+    </div>
+</main>
+<popover ng-show="main.isPopoverVisible"
+         movie="main.popoverMovie"
+         close="main.closePopover()"
+></popover>
