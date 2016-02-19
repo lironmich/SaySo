@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="rtl">
+
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		
+        <!--script src="./libs/jquery-1.4.4.min.js" type="text/javascript"></script>
+		
+		<!--link rel="stylesheet" type="text/css" href="../../libs/themes/default/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../../libs/themes/icon.css">
+		<link rel="stylesheet" type="text/css" href="../../libs/jquery-easyui-1.4.2/demo/demo.css">
+		<!--script type="text/javascript" src="../../libs/jquery.min.js"></script>
+		<script type="text/javascript" src="../../libs/jquery.easyui.min.js"></script-->
+	</head>
+
+	<body dir="rtl">
+        <header></header>
+		<div style="margin:20px 0;"></div>
+	<div style="margin:20px 0;">  
+		<a href="#" class="easyui-linkbutton" onclick="getChecked()"> GetChecked </a> 
+	</div> 
+	<div style="margin:10px 0"> 
+		<input type="checkbox"  checked onchange="$('#tt').tree({cascadeCheck:$(this).is(':checked')})">CascadeCheck <input>
+		<input type="checkbox" onchange="$('#tt').tree({onlyLeafCheck:$(this).is(':checked')})"> OnlyLeafCheck 
+		<input>  
+	</div>
+	<form method="post" id="tree" >	
+		<div class="easyui-panel" style="padding:5px">   
+			<ul id="tt" class="easyui-tree" data-options="url:'carddb.json',method:'get',animate:true,checkbox:true"></ul>
+		</div> 
+	 </form>
+	 <div id="submit"> Submit </div> 
+
+	 <script type="text/javascript"> 
+	 $( "#submit").click(function() {  
+	   $("#tree").append('<input type="hidden" name="ids" value=' + getChecked() + ' />'); 
+	   $( "#tree").submit();  
+	 }); 
+        function getChecked(){ 
+            var nodes = $('#tt').tree('getChecked'); 
+            var s = []; 
+            for(var i=0; i<nodes.length; i++){ 
+                s[s.length] = nodes[i].id; 
+            } 
+	         window.location.href = "./card?id=" + s[Math.floor(Math.random()*s.length)] +"&face=0"
+            return s.toString();
+	     } 
+    </script>
+	</body>
+</html>

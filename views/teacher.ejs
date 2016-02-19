@@ -1,0 +1,43 @@
+<!DOCTYPE>
+<html ng-app="teacherApp">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+          integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css"
+          integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/public/apps/SaySo-teacher/partials/teacherManager.css">
+    <link rel="stylesheet" href="/public/apps/SaySo-teacher/directives/videoSearch/videoSearch.css">
+    <link rel="stylesheet" href="/public/apps/SaySo-teacher/directives/youtubePlayer/youtubePlayer.css">
+    <link rel="stylesheet" href="/public/apps/SaySo-teacher/directives/userSubtitlesInput/userSubtitlesInput.css">
+    <link rel="stylesheet" href="/public/apps/SaySo-teacher/directives/subtitlesDisplay/subtitlesDisplay.css">
+
+    <script src="/node_modules/angular/angular.js"></script>
+    <script src="/node_modules/angular-route/angular-route.min.js"></script>
+    <script src="/node_modules/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="/node_modules/angular-resource/angular-resource.min.js"></script>
+    <script src="/node_modules/x2js/xml2json.min.js"></script>
+
+    <script src="/public/apps/SaySo-teacher/app.js"></script>
+    <script src="/public/apps/SaySo-teacher/common/filters/trustUrlFilter.js"></script>
+    <script src="/public/apps/SaySo-teacher/controllers/teacherManagerController.js"></script>
+    <script src="/public/apps/SaySo-teacher/directives/videoSearch/videoSearchController.js"></script>
+    <script src="/public/apps/SaySo-teacher/directives/videoSearch/videoSearchDirective.js"></script>
+    <script src="/public/apps/SaySo-teacher/directives/youtubePlayer/youtubePlayerController.js"></script>
+    <script src="/public/apps/SaySo-teacher/directives/youtubePlayer/youtubePlayerDirective.js"></script>
+    <script src="/public/apps/SaySo-teacher/directives/userSubtitlesInput/userSubtitlesInputController.js"></script>
+    <script src="/public/apps/SaySo-teacher/directives/userSubtitlesInput/userSubtitlesInputDirective.js"></script>
+    <script src="/public/apps/SaySo-teacher/directives/subtitlesDisplay/subtitlesDisplayController.js"></script>
+    <script src="/public/apps/SaySo-teacher/directives/subtitlesDisplay/subtitlesDisplayDirective.js"></script>
+</head>
+<body>
+    <ng-view></ng-view>
+</body>
+</html>
+

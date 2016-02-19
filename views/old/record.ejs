@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" dir="rtl">
+
+	<head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
+		<link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic'
+	    rel='stylesheet' type='text/css' />
+		<link href="./public/styles/recordrtl.css" rel="stylesheet" type="text/css" />
+	</head>
+
+	<body>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"  />
+        	<header></header>
+			
+		<div class="wrapper"> 
+			<button type="button" Id="rightInRec"> < </button>
+			<button type="button" Id="leftInRec" > > </button>
+			<div id="textBody"><%=dataText %></div>
+			<div id="faceSymbol"><%=dataSymbol %></div>
+			<button type="button" Id="NextRecord"> Next</button>
+		</div>
+
+		<script type="text/javascript">
+		 $(function() {
+			console.log("page loadded");
+			function linkDispatcher() {
+				faceright='./card?id=' +<%=cardID%> + '&face=' +<%=faceRight%>;
+				faceleft='./card?id=' + <%=cardID%> + '&face=' +<%=faceLeft%>;
+				stringNext = './nextcard';
+				
+				
+				$('#rightInRec').click(function(){
+				   window.location.href = faceright;
+				})
+				
+				$('#leftInRec').click(function(){
+				   window.location.href = faceleft;
+				})
+				
+				$('#NextRecord').click(function(){
+				   window.location.href = stringNext;
+				})
+			}
+			
+			linkDispatcher();
+			debugger;
+		 });
+		</script>
+
+	</body>
+
+</html>
