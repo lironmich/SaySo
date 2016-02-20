@@ -1,22 +1,27 @@
 <div class="subtitles-display">
 
-    <div class="header">
-        <span>row</span>
-        <span>source</span>
-        <span>target</span>
-        <span>from</span>
-        <span>to</span>
-    </div>
+    <table>
 
-    <div class="body-container">
-        <div class="body"
-             ng-repeat="text in subtitles.text track by $index">
-            <span ng-bind="$index"></span>
-            <span ng-bind="text.source"></span>
-            <span ng-bind="text.target"></span>
-            <span ng-bind="text.from"></span>
-            <span ng-bind="text.to"></span>
-        </div>
-    </div>
+        <thead>
+            <tr>
+                <th>row</th>
+                <th>source</th>
+                <th>target</th>
+                <th>from</th>
+                <th>to</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="text in subtitles.text track by $index">
+                <td><span ng-bind="$index"></span></td>
+                <td><a href="#" editable-text="text.source" ng-bind="text.source"></a></td>
+                <td><a href="#" editable-text="text.target" ng-bind="text.target"></a></td>
+                <td><a href="#" editable-text="text.from" ng-bind="text.from"></a></td>
+                <td><a href="#" editable-text="text.to" ng-bind="text.to"></a></td>
+            </tr>
+        </tbody>
+
+    </table>
 
 </div>

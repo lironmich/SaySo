@@ -11,6 +11,7 @@
     "angular-resource": "~1.4.9",
     "angular-route": "~1.4.8",
     "angular-sanitize": "~1.4.9",
+    "angular-xeditable": "0.0.1",
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.12.4",
     "bootstrap": "~3.3.6",
@@ -31,7 +32,7 @@
     "serve-favicon": "~2.2.0",
     "utf8": "^2.1.0",
     "util": "^0.10.3",
-    "x2js": "git+https://github.com/abdmob/x2js.git"
+    "x2js": "git://github.com/abdmob/x2js.git#185e410b3fa621070fea1f86a389b477afa216b9"
   },
   "consider": {
     "monk": "*",

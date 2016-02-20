@@ -1,28 +1,15 @@
 
-.subtitles-display .header,
-.subtitles-display .body {
-    width: 100%;
-    text-align: center;
+subtitles-display thead {
 }
 
-.subtitles-display .header > span,
-.subtitles-display .body > span {
-    display: inline-block;
-    width: 20%;
+subtitles-display tbody {
+}
+
+subtitles-display td,
+subtitles-display th {
     padding: 10px;
-    vertical-align: top;
 }
 
-.subtitles-display .header > span:first-child,
-.subtitles-display .body > span:first-child {
-    width: 10%;
-}
-
-.subtitles-display .header {
-    font-weight: bold;
-}
-
-.subtitles-display .body-container {
-    max-height: 500px;
-    overflow: auto;
+subtitles-display td:first-child,
+subtitles-display th:first-child {
 }
