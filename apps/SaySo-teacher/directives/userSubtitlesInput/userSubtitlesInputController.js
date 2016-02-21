@@ -5,7 +5,13 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', functio
 
     var getGoogleTranslateSubtitlesPromise = function(youtubeSubtitlesUrl, toLang) {
         var url = youtubeSubtitlesUrl;
-        url.replace(/fmt=srv\d/, "fmt=srv1");
+
+        url = url.replace(/fmt=srv\d/, "fmt=srv1");
+
+        if (url.indexOf('fmt=srv1') < 0 ){
+            url += '&fmt=srv1'
+        }
+
         url += '&tlang=' + toLang;
 
         return $http.get(url).then(function(response){
