@@ -1,6 +1,17 @@
 var app = angular.module('teacherApp');
 
 app.controller('subtitlesDisplayController', ['$scope', 'NgTableParams', function($scope, NgTableParams) {
+
+    $scope.getTableIndex = function($index) {
+        var tableParams = $scope.tableParams;
+        return (tableParams.page() - 1) * tableParams.count() + $index;
+    };
+
+    $scope.deleteSubtitle = function($index) {
+        var tableIndex = $scope.getTableIndex($index);
+        $scope.subtitles.text.splice(tableIndex, 1);
+    };
+
     $scope.tableParams = new NgTableParams({
         page: 1,
         count: 10

@@ -5,13 +5,22 @@
 }
 
 .subtitles-display th.index {
-    width: 5%;
+    width: 10%;
 }
 
 .subtitles-display th.text {
-    width: 25%;
+    width: 23%;
 }
 
 .subtitles-display th.time {
     width: 10%;
+}
+
+.subtitles-display .delete {
+    display: inline-block;
+    border-radius: 100%;
+    color: red;
+    background: white;
+    margin-right: 5px;
+    cursor: pointer;
 }
