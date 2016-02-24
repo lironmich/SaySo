@@ -1,6 +1,6 @@
 <div class="subtitles-display">
 
-    <table>
+    <table ng-table="tableParams">
 
         <thead>
             <tr>
@@ -14,8 +14,8 @@
         </thead>
 
         <tbody>
-            <tr ng-repeat="text in subtitles.text track by $index">
-                <td><span ng-bind="$index"></span></td>
+            <tr ng-repeat="text in $data track by $index">
+                <td><span ng-bind="(tableParams.page() - 1) * tableParams.count() + $index"></span></td>
                 <td><a href="#" editable-text="text.source" ng-bind="text.source || 'none'"></a></td>
                 <td><a href="#" editable-text="text.target" ng-bind="text.target || 'none'"></a></td>
                 <td><a href="#" editable-text="text.transcript" ng-bind="text.transcript || 'none'"></a></td>

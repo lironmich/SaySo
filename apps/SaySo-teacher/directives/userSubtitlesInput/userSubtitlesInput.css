@@ -2,13 +2,18 @@
     margin: 10px;
 }
 
+.user-subtitles-input > div > span {
+    display: inline-block;
+    width: 100px;
+}
+
 .user-subtitles-input .lang-input {
     width: 30px;
 }
 
 .user-subtitles-input > .youtube-subtitles > span {
     display: inline-block;
-    width: 150px;
+    width: 100px;
     text-decoration: underline;
 }
 
@@ -42,6 +47,6 @@
 }
 
 .user-subtitles-input > .srt-subtitles > button {
-    display: inline-block;
+    display: inli;
     margin: 10px 0;
 }

@@ -1,6 +1,7 @@
 .subtitles-display td,
 .subtitles-display th {
     padding: 10px;
+    text-align: left;
 }
 
 .subtitles-display th.index {
