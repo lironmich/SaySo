@@ -4,6 +4,10 @@
     text-align: left;
 }
 
+.subtitles-display th {
+    min-width: 100px;
+}
+
 .subtitles-display th.index {
     width: 10%;
 }

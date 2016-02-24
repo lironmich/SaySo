@@ -11,42 +11,58 @@
     width: 30px;
 }
 
-.user-subtitles-input > .youtube-subtitles > span {
+.user-subtitles-input .youtube-subtitles > span {
     display: inline-block;
     width: 100px;
     text-decoration: underline;
 }
 
-.user-subtitles-input > .youtube-subtitles > div {
+.user-subtitles-input .youtube-subtitles > div {
     display: inline-block;
     width: 200px;
     vertical-align: top;
 }
 
-.user-subtitles-input > .youtube-subtitles > input {
+.user-subtitles-input .youtube-subtitles > input {
     width: 400px;
     vertical-align: top;
 }
 
-.user-subtitles-input > .youtube-subtitles > button {
+.user-subtitles-input .youtube-subtitles > button {
     vertical-align: top;
 }
 
-.user-subtitles-input > .srt-subtitles > span {
+.user-subtitles-input .srt-subtitles > span {
     display: inline-block;
-    width: 150px;
     text-decoration: underline;
     margin: 10px 0;
 }
 
-.user-subtitles-input > .srt-subtitles > input {
+.user-subtitles-input .srt-subtitles > input {
     display: block;
     width: 400px;
     vertical-align: top;
     margin: 10px 0;
 }
 
-.user-subtitles-input > .srt-subtitles > button {
-    display: inli;
+.user-subtitles-input .manual-subtitles > div {
+    text-decoration: underline;
+    margin: 10px 0;
+}
+
+.user-subtitles-input .srt-subtitles > button {
+    margin: 10px 0;
+}
+
+.user-subtitles-input .manual-subtitles > span {
+    display: inline-block;
+    width: 100px;
+}
+
+.user-subtitles-input .manual-subtitles > input {
+    display: block;
+}
+
+.user-subtitles-input .manual-subtitles > button {
     margin: 10px 0;
 }

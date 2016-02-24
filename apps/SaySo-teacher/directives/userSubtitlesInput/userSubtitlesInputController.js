@@ -123,6 +123,8 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
 
     clearSubtitles();
 
+    $scope.manualSubtitle = {};
+
     $scope.fillSubtitlesFromYoutube = function() {
         var youtubeSubtitlesUrl = $scope.youtubeSubtitlesUrl;
 
@@ -141,7 +143,7 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
 
             fillSubtitlesFromGoogleTranslates(data[0], data[1]);
         })
-    }
+    };
 
     $scope.loadFromSrtFile = function() {
         var action = function(subtitlesText) {
@@ -167,5 +169,21 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
         };
 
         readSrtFile(action);
+    };
+
+    $scope.addManualSubtitle = function() {
+        var subtitle = $scope.manualSubtitle;
+
+        if (!isFinite(subtitle.from) ||
+            !isFinite(subtitle.to)) {
+
+            alert('from, to: should be numbers');
+            return;
+        }
+
+        $scope.$applyAsync(function() {
+            var clone = _.extend({}, subtitle);
+            $scope.subtitles.text.push(clone);
+        });
     }
 }]);

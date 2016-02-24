@@ -19,39 +19,65 @@
                maxlength="3"/>
     </div>
 
-    <div ng-show="subtitles.sourceLang && subtitles.targetLang"
-         class="youtube-subtitles">
+    <div ng-show="subtitles.sourceLang && subtitles.targetLang">
 
-        <span>
-            youtube:
-        </span>
-
-        <div>
-            to find youtube subtitles url
-            open developer tools (F12) -> network.
-            start the video show the subtitles.
-            find 'timedtext' in the network section
-            and copy the url.
-        </div>
-
-        <input ng-model="youtubeSubtitlesUrl"/>
-
-        <button ng-click="fillSubtitlesFromYoutube()">submit</button>
-    </div>
-
-    <div ng-show="subtitles.sourceLang && subtitles.targetLang"
-         class="srt-subtitles">
+        <div class="youtube-subtitles">
 
             <span>
-                srt file:
+                youtube:
             </span>
 
-            <input type="file"
-                   accept=".srt"
-                   file-model="srtFile"/>
+            <div>
+                to find youtube subtitles url
+                open developer tools (F12) -> network.
+                start the video show the subtitles.
+                find 'timedtext' in the network section
+                and copy the url.
+            </div>
 
-            <button ng-click="loadFromSrtFile()">load</button>
+            <input ng-model="youtubeSubtitlesUrl"/>
 
-            <button ng-click="mergeFromSrtFile()">merge</button>
+            <button ng-click="fillSubtitlesFromYoutube()">submit</button>
+        </div>
+
+        <div class="srt-subtitles">
+
+                <span>
+                    srt file:
+                </span>
+
+                <input type="file"
+                       accept=".srt"
+                       file-model="srtFile"/>
+
+                <button ng-click="loadFromSrtFile()">load</button>
+
+                <button ng-click="mergeFromSrtFile()">merge</button>
+        </div>
+
+        <div class="manual-subtitles">
+
+                <div>
+                    add manual:
+                </div>
+
+                <span>from:</span>
+                <input ng-model="manualSubtitle.from"/>
+
+                <span>to:</span>
+                <input ng-model="manualSubtitle.to"/>
+
+                <span>source:</span>
+                <input ng-model="manualSubtitle.source"/>
+
+                <span>target:</span>
+                <input ng-model="manualSubtitle.target"/>
+
+                <span>transcript:</span>
+                <input ng-model="manualSubtitle.transcript"/>
+
+            <button ng-click="addManualSubtitle()">add</button>
+        </div>
+
     </div>
 </div>

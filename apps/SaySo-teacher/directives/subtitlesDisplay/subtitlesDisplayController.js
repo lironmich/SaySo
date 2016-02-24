@@ -30,6 +30,10 @@ app.controller('subtitlesDisplayController', ['$scope', 'NgTableParams', functio
     });
 
     $scope.$watchCollection('subtitles.text', function() {
+        $scope.subtitles.text.sort(function(text1, text2) {
+           return text1.from - text2.from;
+        });
+
         $scope.tableParams.reload();
     })
 }]);
