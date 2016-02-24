@@ -1,26 +1,47 @@
-.user-subtitles-input {
-}
-
 .user-subtitles-input > div {
     margin: 10px;
-}
-
-.user-subtitles-input > div > span {
-    display: inline-block;
-    width: 150px;
-}
-
-.user-subtitles-input > div > div {
-    display: inline-block;
-    width: 200px;
-    vertical-align: top;
 }
 
 .user-subtitles-input .lang-input {
     width: 30px;
 }
 
-.user-subtitles-input .url-input {
+.user-subtitles-input > .youtube-subtitles > span {
+    display: inline-block;
+    width: 150px;
+    text-decoration: underline;
+}
+
+.user-subtitles-input > .youtube-subtitles > div {
+    display: inline-block;
+    width: 200px;
+    vertical-align: top;
+}
+
+.user-subtitles-input > .youtube-subtitles > input {
     width: 400px;
     vertical-align: top;
+}
+
+.user-subtitles-input > .youtube-subtitles > button {
+    vertical-align: top;
+}
+
+.user-subtitles-input > .srt-subtitles > span {
+    display: inline-block;
+    width: 150px;
+    text-decoration: underline;
+    margin: 10px 0;
+}
+
+.user-subtitles-input > .srt-subtitles > input {
+    display: block;
+    width: 400px;
+    vertical-align: top;
+    margin: 10px 0;
+}
+
+.user-subtitles-input > .srt-subtitles > button {
+    display: inline-block;
+    margin: 10px 0;
 }

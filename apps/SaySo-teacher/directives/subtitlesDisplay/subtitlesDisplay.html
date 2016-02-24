@@ -4,21 +4,23 @@
 
         <thead>
             <tr>
-                <th>row</th>
-                <th>source</th>
-                <th>target</th>
-                <th>from</th>
-                <th>to</th>
+                <th class="index">row</th>
+                <th class="text">source</th>
+                <th class="text">target</th>
+                <th class="text">transcript</th>
+                <th class="time">from</th>
+                <th class="time">to</th>
             </tr>
         </thead>
 
         <tbody>
             <tr ng-repeat="text in subtitles.text track by $index">
                 <td><span ng-bind="$index"></span></td>
-                <td><a href="#" editable-text="text.source" ng-bind="text.source"></a></td>
-                <td><a href="#" editable-text="text.target" ng-bind="text.target"></a></td>
-                <td><a href="#" editable-text="text.from" ng-bind="text.from"></a></td>
-                <td><a href="#" editable-text="text.to" ng-bind="text.to"></a></td>
+                <td><a href="#" editable-text="text.source" ng-bind="text.source || 'none'"></a></td>
+                <td><a href="#" editable-text="text.target" ng-bind="text.target || 'none'"></a></td>
+                <td><a href="#" editable-text="text.transcript" ng-bind="text.transcript || 'none'"></a></td>
+                <td><a href="#" editable-text="text.from" ng-bind="text.from || 'none'"></a></td>
+                <td><a href="#" editable-text="text.to" ng-bind="text.to || 'none'"></a></td>
             </tr>
         </tbody>
 

@@ -1,4 +1,4 @@
-var app = angular.module('teacherApp', ['ngResource', 'ngRoute', 'xeditable']);
+var app = angular.module('teacherApp', ['ngResource', 'ngRoute', 'xeditable', 'file-model']);
 
 app.config(['$routeProvider', function($routeProvider) {
     $routeProvider

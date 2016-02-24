@@ -1,15 +1,16 @@
-
-subtitles-display thead {
-}
-
-subtitles-display tbody {
-}
-
-subtitles-display td,
-subtitles-display th {
+.subtitles-display td,
+.subtitles-display th {
     padding: 10px;
 }
 
-subtitles-display td:first-child,
-subtitles-display th:first-child {
+.subtitles-display th.index {
+    width: 5%;
+}
+
+.subtitles-display th.text {
+    width: 25%;
+}
+
+.subtitles-display th.time {
+    width: 10%;
 }

@@ -5,7 +5,6 @@
         </span>
 
         <input ng-model="subtitles.sourceLang"
-               ng-model-options="{debounce: 500}"
                class="lang-input"
                maxlength="3"/>
     </div>
@@ -16,14 +15,15 @@
        </span>
 
         <input ng-model="subtitles.targetLang"
-               ng-model-options="{debounce: 500}"
                class="lang-input"
                maxlength="3"/>
     </div>
 
-    <div ng-show="subtitles.sourceLang && subtitles.targetLang">
+    <div ng-show="subtitles.sourceLang && subtitles.targetLang"
+         class="youtube-subtitles">
+
         <span>
-            how to download youtube transcript:
+            youtube:
         </span>
 
         <div>
@@ -34,8 +34,24 @@
             and copy the url.
         </div>
 
-        <input ng-model="youtubeSubtitlesUrl"
-               ng-model-options="{debounce: 500}"
-               class="url-input"/>
+        <input ng-model="youtubeSubtitlesUrl"/>
+
+        <button ng-click="fillSubtitlesFromYoutube()">submit</button>
+    </div>
+
+    <div ng-show="subtitles.sourceLang && subtitles.targetLang"
+         class="srt-subtitles">
+
+            <span>
+                srt file:
+            </span>
+
+            <input type="file"
+                   accept=".srt"
+                   file-model="srtFile"/>
+
+            <button ng-click="loadFromSrtFile()">load</button>
+
+            <button ng-click="mergeFromSrtFile()">merge</button>
     </div>
 </div>
