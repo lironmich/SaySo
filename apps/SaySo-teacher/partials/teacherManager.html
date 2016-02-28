@@ -2,16 +2,20 @@
     <video-search video-id="videoId"/>
     </video-search>
 
-    <youtube-player ng-if="videoId"
-                    video-id="videoId">
-    </youtube-player>
+    <div ng-if="videoId">
+        <youtube-player video-id="videoId">
+        </youtube-player>
 
-    <user-subtitles-input ng-if="videoId"
-                          video-id="videoId"
-                          subtitles="subtitles">
-    </user-subtitles-input>
+        <user-subtitles-input video-id="videoId"
+                              subtitles="subtitles">
+        </user-subtitles-input>
+    </div>
 
-    <subtitles-display ng-if="subtitles.text.length > 0"
-            subtitles="subtitles">
-    </subtitles-display>
+    <div ng-if="subtitles.text.length > 0">
+        <subtitles-display subtitles="subtitles">
+        </subtitles-display>
+
+        <subtitles-matching subtitles="subtitles">
+        </subtitles-matching>
+    </div>
 </div>

@@ -1,0 +1,48 @@
+<div class="subtitles-matching">
+    <button ng-click="generateAssignedKey()">
+        change assigned key
+    </button>
+
+    <table ng-table="tableParams">
+
+        <thead>
+            <tr>
+                <th class="index">row</th>
+                <th>source</th>
+                <th>target</th>
+                <th>transcript</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            <tr ng-repeat="text in $data track by $index">
+                <td>
+                    <span ng-bind="getTableIndex($index)"></span>
+                </td>
+                <td>
+                    <button ng-repeat="item in getWords(text.source) track by $index"
+                            ng-click="assignKey('source', $parent.$index, $index)"
+                            ng-bind="item"
+                            ng-style="getWordStyle('source', $parent.$index, $index)">
+                    </button>
+                </td>
+                <td>
+                    <button ng-repeat="item in getWords(text.target) track by $index"
+                            ng-click="assignKey('target', $parent.$index, $index)"
+                            ng-bind="item"
+                            ng-style="getWordStyle('target', $parent.$index, $index)">
+                    </button>
+                </td>
+                <td>
+                    <button ng-repeat="item in getWords(text.transcript) track by $index"
+                            ng-click="assignKey('transcript', $parent.$index, $index)"
+                            ng-bind="item"
+                            ng-style="getWordStyle('transcript', $parent.$index, $index)">
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+
+    </table>
+
+</div>
