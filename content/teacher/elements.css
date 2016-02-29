@@ -2,7 +2,7 @@ button {
     color: white;
     background-color: #5bc0de;
     border: 1px solid #b9def0;
-    padding: 2px 8px;
+    padding: 5px 8px;
     border-radius: 0;
     transition: 0.3s all ease-in-out;
 }

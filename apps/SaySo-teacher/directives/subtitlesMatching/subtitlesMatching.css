@@ -1,2 +1,16 @@
-.subtitles-matching {
+.subtitles-matching > table {
+    margin: 10px 0;
 }
+
+.subtitles-matching > table th:first-child {
+    width: 5%;
+}
+
+.subtitles-matching > table th {
+    width: 32%;
+}
+
+.subtitles-matching > table td {
+    padding: 5px;
+}
+
