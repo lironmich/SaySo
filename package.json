@@ -22,6 +22,7 @@
     "ejs": "~2.3.4",
     "express": "~4.12.2",
     "express-session": "^1.11.2",
+    "jquery": "^2.2.1",
     "mongoose": "^4.0.2",
     "morgan": "^1.5.3",
     "ng-table": "^0.5.4",

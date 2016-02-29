@@ -1,6 +1,7 @@
 <div class="subtitles-matching">
-    <button ng-click="generateAssignedKey()">
-        change assigned key
+    <button ng-click="generateAssignedKey()"
+            ng-style="getAssignedKeyStyle()">
+        change assigned key (ctrl)
     </button>
 
     <table ng-table="tableParams">

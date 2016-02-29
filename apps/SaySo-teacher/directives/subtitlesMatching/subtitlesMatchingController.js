@@ -168,5 +168,15 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         style['background-color'] = color;
 
         return style;
+    };
+
+    $scope.getAssignedKeyStyle = function() {
+        var assignedKey = $scope.assignedKey;
+        var color = convertNumberToColor(assignedKey);
+
+        var style = {};
+        style['background-color'] = color;
+
+        return style;
     }
 }]);

@@ -6,6 +6,17 @@ app.directive('subtitlesMatching', function() {
         scope: {
             subtitles: '='
         },
+        link: function(scope) {
+          $('body').on('keydown', function(e) {
+              if (!e.ctrlKey) {
+                return;
+              }
+
+              scope.$applyAsync(function() {
+                  scope.generateAssignedKey();
+              });
+          })
+        },
         templateUrl: '/apps/SaySo-teacher/directives/subtitlesMatching/subtitlesMatching.html',
         controller: 'subtitlesMatchingController'
     }
