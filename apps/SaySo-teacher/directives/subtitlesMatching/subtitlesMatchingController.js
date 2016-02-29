@@ -41,6 +41,45 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         return null;
     };
 
+    var shouldDeleteTextMatch = function(text1, text2) {
+        return text1.source !== text2.source ||
+               text1.target !== text2.target ||
+               text1.transcript !== text2.transcript;
+    };
+
+    var onSubtitlesTextChanged = function(newValue, oldValue) {
+        for (var i = 0; i < newValue.length; i++) {
+            var newText = newValue[i];
+            var oldText = oldValue[i];
+
+            if (shouldDeleteTextMatch(newText, oldText)) {
+                newText.match = null;
+            }
+        }
+    };
+
+    var onSubtitlesTextRemoved =  function(newValue, oldValue) {
+        var removedIndex = getRemovedSubtitlesTextIndex(newValue, oldValue);
+
+        for (var i =  newValue.length - 1; i >= removedIndex; i--) {
+            //$scope.subtitles.text[i] = $scope.sub
+        }
+    };
+
+    $scope.$watch('subtitles.text', function(newValue, oldValue) {
+        if (!newValue) {
+            return;
+        }
+
+        if (oldValue &&
+            newValue.length === oldValue.length) {
+
+            onSubtitlesTextChanged(newValue, oldValue);
+        }
+
+        $scope.tableParams.reload();
+    }, true);
+
     $scope.generateAssignedKey = function() {
         var rand = Math.random().toString().slice(2);
         $scope.assignedKey = parseInt(rand) ;
