@@ -74,6 +74,8 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         }
     };
 
+    var _assingKey =
+
     $scope.$watch('subtitles.text', function(newValue, oldValue) {
         if (!newValue) {
             return;
@@ -125,12 +127,9 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         return text.trim().split(' ');
     };
 
-    $scope.assignKey = function(propertyName, parentIndex, index) {
-        var tableIndex = $scope.getTableIndex(parentIndex);
-        var text = $scope.subtitles.text[tableIndex];
-
+    var assignKey = function(text, propertyName, index) {
         /*  assigned key => [source indexes, target indexes, transcript indexes]
-            int => [int[], int[], int] */
+         int => [int[], int[], int] */
         text.match = text.match || {};
 
         var matchDict = text.match;
@@ -154,6 +153,13 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
                 return value !== index;
             });
         }
+    };
+
+    $scope.assignKey = function(propertyName, parentIndex, index) {
+        var tableIndex = $scope.getTableIndex(parentIndex);
+        var text = $scope.subtitles.text[tableIndex];
+
+        assignKey(text, propertyName, index);
     };
 
     $scope.getWordStyle = function(propertyName, parentIndex, index) {
@@ -186,5 +192,31 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         style['background-color'] = color;
 
         return style;
-    }
+    };
+
+    $scope.autoMatchTranscriptToSource = function(direction) {
+        var subtitlesText = $scope.subtitles.text;
+
+        for (var i = 0; i < subtitlesText.length; i++) {
+            var text = subtitlesText[i];
+
+            var sourceWords = $scope.getWords(text.source);
+            var transcriptWords = $scope.getWords(text.transcript);
+
+            if (sourceWords.length !== transcriptWords.length) {
+                continue;
+            }
+
+            text.match = null;
+
+            for (var j = 0; j < sourceWords.length; j++) {
+                var index = direction ? j : sourceWords.length - 1 - j;
+
+                $scope.generateAssignedKey();
+
+                assignKey(text, 'source', j);
+                assignKey(text, 'transcript', index);
+            }
+        }
+    };
 }]);

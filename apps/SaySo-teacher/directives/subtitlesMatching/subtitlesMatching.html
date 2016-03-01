@@ -4,6 +4,14 @@
         change assigned key (ctrl)
     </button>
 
+    <button ng-click="autoMatchTranscriptToSource(true)">
+        auto match transcript to source: ltr
+    </button>
+
+    <button ng-click="autoMatchTranscriptToSource(false)">
+        auto match transcript to source: rtl
+    </button>
+
     <table ng-table="tableParams">
 
         <thead>
