@@ -41,10 +41,18 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         return null;
     };
 
-    var shouldDeleteTextMatch = function(text1, text2) {
-        return text1.source !== text2.source ||
-               text1.target !== text2.target ||
-               text1.transcript !== text2.transcript;
+    var getPropertyNameIfChanged = function(text1, text2, propertyName) {
+        if (text1[propertyName] !== text2[propertyName]) {
+            return propertyName;
+        }
+
+        return null;
+    };
+
+    var getChangedPropertyName = function(text1, text2) {
+        return getPropertyNameIfChanged(text1, text2, 'source') ||
+            getPropertyNameIfChanged(text1, text2, 'target') ||
+            getPropertyNameIfChanged(text1, text2, 'transcript')
     };
 
     var onSubtitlesTextChanged = function(newValue, oldValue) {
@@ -52,17 +60,17 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
             var newText = newValue[i];
             var oldText = oldValue[i];
 
-            if (shouldDeleteTextMatch(newText, oldText)) {
-                newText.match = null;
+            var changedPropertyName = getChangedPropertyName(newText, oldText);
+            if (!changedPropertyName) {
+                continue;
             }
-        }
-    };
 
-    var onSubtitlesTextRemoved =  function(newValue, oldValue) {
-        var removedIndex = getRemovedSubtitlesTextIndex(newValue, oldValue);
+            var matchDict = newText.match;
+            var matchesEntry = findMatchesEntry(changedPropertyName);
 
-        for (var i =  newValue.length - 1; i >= removedIndex; i--) {
-            //$scope.subtitles.text[i] = $scope.sub
+            _.values(matchDict).forEach(function(value) {
+                value[matchesEntry] = [];
+            });
         }
     };
 
