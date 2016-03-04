@@ -5,11 +5,16 @@ app.controller('teacherManager', ['$scope', '$http', function($scope, $http) {
     $scope.subtitles = {};
 
     $scope.saveSubtitles = function() {
-        var subtitles = !$scope.subtitles;
-        if (!subtitles) {
+        var videoId = $scope.videoId;
+        var subtitles = $scope.subtitles;
+
+        if (!videoId || !subtitles) {
             return;
         }
 
-
+        $http.post('/dbapi/addSubtitle', {
+            youtubeId: videoId,
+            subtitles: subtitles
+        });
     }
 }]);

@@ -110,23 +110,27 @@ module.exports = function(app) {
         res.render('client.ejs');
     });
 
-    app.route('/teacher').get (function(req, res) {
+    app.route('/teacher').get(function(req, res) {
         res.render('teacher.ejs');
     });
 
-    app.route('/dbapi/movies').get (function(req, res) {
-        mongoAPI.getMovies(req, res);
+    app.route('/dbapi/movies').get(function(req, res) {
+        mongoAPI.getMovies(res);
     });
 
-    app.route('/dbapi/subtitles').get (function(req, res) {
-        mongoAPI.getSubtitles(req, res);
+    app.route('/dbapi/subtitles').get(function(req, res) {
+        mongoAPI.getSubtitles(res);
     });
 
-    app.route('/rdata/movies').get (function(req, res) {
+    app.route('/dbapi/addSubtitle').post(function(req, res) {
+        mongoAPI.addSubtitle(req, res);
+    });
+
+    app.route('/rdata/movies').get(function(req, res) {
         res.json(moviemock);
     });
 
-    app.route('/rdata/subtitle').get (function(req, res) {
+    app.route('/rdata/subtitle').get(function(req, res) {
         res.json(subdata);
     });
 };
