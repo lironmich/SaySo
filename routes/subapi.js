@@ -1,23 +1,3 @@
-
-//// Mock for Dor
-// sub1 = {"00:00:18,578 --> 00:00:19,963" : "first line "};
-// sub2 = {"00:00:19,993 --> 00:00:21,265" : "second line"};
-// sub3 = {"00:00:21,380 --> 00:00:22,903" : "third line"};
-//
-// he_tr_en1= {"00:00:18,578 --> 00:00:19,963" : "shura rishona"};
-// he_tr_en2= {"00:00:19,993 --> 00:00:21,265" : "shura shniya"};
-// he_tr_en3= {"00:00:21,380 --> 00:00:22,903" : "shura shlishit"};
-//
-// heb1= {"00:00:18,578 --> 00:00:19,963" : "שורה ראשונה"};
-// heb2= {"00:00:19,993 --> 00:00:21,265" : "שורה שנייה"};
-// heb3= {"00:00:21,380 --> 00:00:22,903" : "שורה שלישית"};
-//
-// blocks=[];
-// blocks[0] = {'en' : sub1, 'heb' : heb1,  couplings : [ ["שורה", "line", "shura"], ["second", "ראשונה", "rishona"] ] };
-// blocks[1] = {'en' : sub2, 'heb' : heb2,  couplings : [ ["שורה", "line", "shura"], ["second", "שנייה", "shniya"] ]  };
-// blocks[2] = {'en' : sub3, 'heb' : heb3,  couplings : [ ["שורה", "line", "shura"], ["second", "שלישית", "shlishit"] ]  };
-//
-
 var moviemock = [{
     "imageUrl": "apps/SaySo-client/sayso-client/data/img/The_Shawshank_Redemption.jpg",
     "movieName": "The Shawshank Redemption",
@@ -120,111 +100,33 @@ var subdata = [{
         ["עושה", "do", "ose"],
         ["את זה", "it", "et ze"]
     ]
-}]
+}];
 
-var mongodata = require('../models/mongoAPI');
+var mongoAPI = require('../models/mongoAPI');
 
-module.exports = function(app, passport) {
-
-
-    app.get('/cards', function(req, res) {
-        res.render('cards.ejs');
-        // res.json(blocks);
-        // mongodata.Tester(res);
-    });
+module.exports = function(app) {
 
     app.get('/', function(req, res) {
         res.render('client.ejs');
-        //  res.sendFile
-        // res.json(blocks);
     });
 
-    app.route('/rdata/movies')
-        .get (function(req, res) {
-            res.json(moviemock);
-        })
-
-    app.route('/rdata/subtitle')
-        .get (function(req, res) {
-            res.json(subdata);
-        })
-
-    app.get('/clientcontrol', function(req, res) {
-        res.render('client.ejs');
-        //  res.sendFile
-        // res.json(blocks);
+    app.route('/teacher').get (function(req, res) {
+        res.render('teacher.ejs');
     });
 
-
-    app.route('/teacher')
-        .get (function(req, res) {
-            res.render('teacher.ejs');
-        })
-
-    // get / set movie = movie=id / new
-
-    app.get('/viewsrtmock', function(req, res) {
-        mongodata.viewFiles(res);
+    app.route('/dbapi/movies').get (function(req, res) {
+        mongoAPI.getMovies(req, res);
     });
 
-    app.get('/parsesrtmock', function(req, res) {
-        mongodata.InitDBMocks(res);
+    app.route('/dbapi/subtitles').get (function(req, res) {
+        mongoAPI.getSubtitles(req, res);
     });
 
-    app.get('/cliplist', function(req, res) {
-        mongodata.clipList(res);
+    app.route('/rdata/movies').get (function(req, res) {
+        res.json(moviemock);
     });
 
-    //  /dbapi/movies
-    app.route('/dbapi/languages')
-        .get (function(req, res) {
-            // No params
-            mongodata.getLanguages(req, res);
-        })
-
-
-    //  /dbapi/movies
-    app.route('/dbapi/movies')
-        .get (function(req, res) {
-            // params category, source_language, dest_language
-            mongodata.getMovies(req, res);
-        })
-
-
-    // @params
-    // start_time : "dd:dd:dd,ddd"      || "00:00:00,000"
-    // end_time   : "dd:dd:dd,ddd" || start_time +4
-    app.route('/dbapi/moviesub/:id')
-        .get (function(req, res) {
-            console.log("'/dbapi/moviesub/:id");
-            mongodata.getMovieSub(req, res);
-        })
-        // .put .delete .update
-
-
-    //  teacher/movie/2424?lan1=he&lan2=en&lan3=tr
-    app.route('/teacher/movie/:movie_id')
-
-        .get(function(req, res) {
-
-            id = req.params.movie_id;
-            lan1 = req.query.lan1;
-            lan2 = req.query.lan2;
-            lan3 = req.query.lan3;
-
-            res.json("");
-        })
-
-        .put(function(req, res) {
-            console.log('put function');
-        })
-
-        .delete(function(req, res) {
-            console.log('delete function');
-        })
-
-        .post(function(req, res) {
-            console.log('post function');
-        })
-
+    app.route('/rdata/subtitle').get (function(req, res) {
+        res.json(subdata);
+    });
 };

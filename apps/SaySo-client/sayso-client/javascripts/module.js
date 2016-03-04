@@ -8,10 +8,5 @@ angular.module('sayso', ['ngRoute', 'ngSanitize','appConfig'])
                 controllerAs: 'main',
                 templateUrl: 'apps/SaySo-client/sayso-client/partials/main.html'
             })
-            .when('/teacher', {
-                controller: 'teacherController',
-                controllerAs: 'teacher',
-                templateUrl: 'apps/SaySo-client/sayso-client/partials/teacher.html'
-            })
             .otherwise('/');
     }]);
