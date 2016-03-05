@@ -5,19 +5,7 @@ var Movie = models.Movie;
 var Subtitle = models.Subtitle;
 
 function getLanguages(req, res) {
-    var findParams = {};
-
-    var name = req.query.name;
-    if (name) {
-        findParams.name = name;
-    }
-
-    var symbol = req.query.symbol;
-    if (symbol) {
-        findParams.symbol = symbol;
-    }
-
-    language.find({}, function(err) {
+    language.find(req.query, function(err) {
         if (err) res.json.reject(err)
     }).then(function(data){
         res.json(data);
@@ -25,14 +13,7 @@ function getLanguages(req, res) {
 }
 
 function getMovies(req, res) {
-    var findParams = {};
-
-    var language = req.query.language;
-    if (language) {
-        findParams.language = language;
-    }
-
-	Movie.find(findParams, function(err) {
+	Movie.find(req.query, function(err) {
 		if (err) res.json.reject(err)
 	}).then(function(data){
 		res.json(data);
@@ -40,7 +21,7 @@ function getMovies(req, res) {
 }
 
 function getSubtitles(req, res) {
-    Subtitle.find({}, function(err) {
+    Subtitle.find(req.query, function(err) {
 		if (err) res.json.reject(err)
 	}).then(function(data){
 		res.json(data);

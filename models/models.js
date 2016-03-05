@@ -22,7 +22,7 @@ var movieSchema = new Schema({
 });
 
 var subtitleSchema = new Schema({
-    youtubeId: { type: String, unique: true, required: true },
+    youtubeId: { type: String, required: true },
     subtitles: { type: Schema.Types.Mixed, required: true}
 });
 

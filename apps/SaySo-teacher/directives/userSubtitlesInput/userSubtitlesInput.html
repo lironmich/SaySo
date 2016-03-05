@@ -6,7 +6,7 @@
 
         <input ng-model="subtitles.sourceLang"
                class="lang-input"
-               maxlength="3"/>
+               maxlength="2"/>
     </div>
 
     <div>
@@ -16,10 +16,22 @@
 
         <input ng-model="subtitles.targetLang"
                class="lang-input"
-               maxlength="3"/>
+               maxlength="2"/>
     </div>
 
     <div ng-show="subtitles.sourceLang && subtitles.targetLang">
+
+        <div class="user-subtitles">
+
+            <span>
+                user subtitles:
+            </span>
+
+            <button ng-click="fillSubtitlesFromDB()">
+                load
+            </button>
+
+        </div>
 
         <div class="youtube-subtitles">
 
@@ -37,7 +49,10 @@
 
             <input ng-model="youtubeSubtitlesUrl"/>
 
-            <button ng-click="fillSubtitlesFromYoutube()">submit</button>
+            <button ng-click="fillSubtitlesFromYoutube()">
+                submit
+            </button>
+
         </div>
 
         <div class="srt-subtitles">
@@ -50,9 +65,14 @@
                        accept=".srt"
                        file-model="srtFile"/>
 
-                <button ng-click="loadFromSrtFile()">load</button>
+                <button ng-click="loadFromSrtFile()">
+                    load
+                </button>
 
-                <button ng-click="mergeFromSrtFile()">merge</button>
+                <button ng-click="mergeFromSrtFile()">
+                    merge
+                </button>
+
         </div>
 
         <div class="manual-subtitles">
@@ -76,7 +96,10 @@
                 <span>transcript:</span>
                 <input ng-model="manualSubtitle.transcript"/>
 
-            <button ng-click="addManualSubtitle()">add</button>
+                <button ng-click="addManualSubtitle()">
+                    add
+                </button>
+
         </div>
 
     </div>

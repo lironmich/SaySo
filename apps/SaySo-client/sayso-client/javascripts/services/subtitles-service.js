@@ -1,7 +1,7 @@
 angular.module('sayso')
     .factory('subtitlesService', [
-        '$http', '$q', '$cacheFactory', '$log', 'SUBTITLES_URL','appConfig',
-        function($http, $q, $cacheFactory, $log, SUBTITLES_URL,appConfig) {
+        '$http', '$q', '$cacheFactory', '$log', 'SUBTITLES_URL',
+        function($http, $q, $cacheFactory, $log, SUBTITLES_URL) {
 
             var cache = $cacheFactory('subtitlesService');
 
@@ -64,7 +64,7 @@ angular.module('sayso')
             function loadSubtitles(query, language, translation) {
                 var deferred = $q.defer();
                 $http
-                    .get(appConfig.basePath + SUBTITLES_URL + query)
+                    .get(SUBTITLES_URL + query)
                     .then(function(response) {
                         deferred.resolve(response.data.map(function(block) {
                             return formatBlock(block,language, translation);

@@ -1,11 +1,11 @@
 angular.module('sayso')
-    .factory('moviesService', ['$http', '$q', '$log', 'MOVIES_URL','appConfig', function($http, $q, $log, MOVIES_URL,appConfig) {
+    .factory('moviesService', ['$http', '$q', '$log', 'MOVIES_URL', function($http, $q, $log, MOVIES_URL) {
         var defer;
 
         defer = $q.defer();
 
         $http
-            .get(appConfig.basePath + MOVIES_URL)
+            .get(MOVIES_URL)
             .then(function(response) {
                 defer.resolve(response.data);
             })

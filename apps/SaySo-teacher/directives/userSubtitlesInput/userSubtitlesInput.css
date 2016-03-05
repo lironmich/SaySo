@@ -11,6 +11,16 @@
     width: 30px;
 }
 
+.user-subtitles-input .user-subtitles > span {
+    display: inline-block;
+    width: 100px;
+    text-decoration: underline;
+}
+
+.user-subtitles-input .user-subtitles > button {
+    margin: 10px 0;
+}
+
 .user-subtitles-input .youtube-subtitles > span {
     display: inline-block;
     width: 100px;
@@ -45,15 +55,14 @@
     margin: 10px 0;
 }
 
-.user-subtitles-input .manual-subtitles > div {
-    text-decoration: underline;
-    margin: 10px 0;
-}
-
 .user-subtitles-input .srt-subtitles > button {
     margin: 10px 0;
 }
 
+.user-subtitles-input .manual-subtitles > div {
+    text-decoration: underline;
+    margin: 10px 0;
+}
 .user-subtitles-input .manual-subtitles > span {
     display: inline-block;
     width: 100px;

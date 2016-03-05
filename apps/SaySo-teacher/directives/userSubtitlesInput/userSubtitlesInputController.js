@@ -1,6 +1,6 @@
 var app = angular.module('teacherApp');
 
-app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtParserService', function($scope, $http, $q, srtParserService) {
+app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtParserService', 'SUBTITLES_URL', function($scope, $http, $q, srtParserService, SUBTITLES_URL) {
     var xmlToJsonConverter = new X2JS();
 
     var getGoogleTranslateSubtitlesPromise = function(youtubeSubtitlesUrl, toLang) {
@@ -61,12 +61,12 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
             window.FileReader &&
             window.FileList &&
             window.Blob);
-    }
+    };
 
     var getFileExtension = function(file) {
         var split = file.name.split('.');
         return split[split.length - 1];
-    }
+    };
 
     var canReadFile = function(file) {
         if (!isFileReaderSupported()) {
@@ -124,6 +124,34 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
     clearSubtitles();
 
     $scope.manualSubtitle = {};
+
+    $scope.fillSubtitlesFromDB = function() {
+        var sourceLang = $scope.subtitles.sourceLang;
+        var targetLang = $scope.subtitles.targetLang;
+
+        $http.get(SUBTITLES_URL, {
+            params: {
+                youtubeId: $scope.videoId,
+            }
+        }).then(function(response) {
+            var data = response.data;
+            var subtitles = _.pluck(data, 'subtitles');
+
+            subtitles = _.filter(subtitles, function(subtitle) {
+               return subtitle.sourceLang === sourceLang &&
+                   subtitle.targetLang === targetLang;
+            });
+
+            if (subtitles.length === 0) {
+                alert('subtitle not found');
+                return;
+            }
+
+            $scope.$applyAsync(function() {
+                $scope.subtitles.text = subtitles[0].text;
+            });
+        });
+    };
 
     $scope.fillSubtitlesFromYoutube = function() {
         var youtubeSubtitlesUrl = $scope.youtubeSubtitlesUrl;
