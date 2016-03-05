@@ -39,7 +39,7 @@ angular.module('sayso')
                 }
                 if (vm.isPopoverVisible) {
                     vm.popoverMovie = movies.reduce(function(found, movie) {
-                        if (!found && (movie.movieName === movieName)) {
+                        if (!found && (movie.name === movieName)) {
                             found = movie;
                         }
                         return found;
@@ -85,7 +85,7 @@ angular.module('sayso')
             this.showPopover = function(movie) {
                 this.isPopoverVisible = true;
                 this.popoverMovie = movie;
-                $location.search('popover', movie.movieName);
+                $location.search('popover', movie.name);
             };
 
             // Hide Popover

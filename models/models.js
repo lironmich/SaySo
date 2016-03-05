@@ -5,17 +5,20 @@ mongoose.connect('mongodb://lironmich:123456@ds061405.mongolab.com:61405/sayso-d
 
 var Schema = mongoose.Schema;
 
+var languageSchema = new Schema({
+    name: String,
+    symbol: String
+});
+
 var movieSchema = new Schema({
     name: String,
-    provider: String,
-    link: String,
-    source_lan: {},
-    dest_lans: {},
     imageUrl: String,
-    "level": Number,
-    "viewsCount": Number,
-    "likesCount": Number,
-    "category": String
+    link: String,
+    language: String,
+    level: Number,
+    viewsCount: Number,
+    likesCount: Number,
+    category: String
 });
 
 var subtitleSchema = new Schema({
@@ -23,8 +26,10 @@ var subtitleSchema = new Schema({
     subtitles: {}
 });
 
+var Language = mongoose.model('Language', languageSchema);
 var Movie = mongoose.model('Movie', movieSchema);
 var Subtitle = mongoose.model('Subtitle', subtitleSchema);
 
+exports.Language = Language;
 exports.Movie = Movie;
 exports.Subtitle = Subtitle;

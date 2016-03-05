@@ -1,17 +1,45 @@
 var models = require('./models');
 
+var language = models.Language;
 var movie = models.Movie;
 var subtitle = models.Subtitle;
 
-function getMovies(res) {
-	movie.find({}, function(err) {
+function getLanguages(req, res) {
+    var findParams = {};
+
+    var name = req.query.name;
+    if (name) {
+        findParams.name = name;
+    }
+
+    var symbol = req.query.symbol;
+    if (symbol) {
+        findParams.symbol = symbol;
+    }
+
+    language.find({}, function(err) {
+        if (err) res.json.reject(err)
+    }).then(function(data){
+        res.json(data);
+    });
+}
+
+function getMovies(req, res) {
+    var findParams = {};
+
+    var language = req.query.language;
+    if (language) {
+        findParams.language = language;
+    }
+
+	movie.find(findParams, function(err) {
 		if (err) res.json.reject(err)
 	}).then(function(data){
 		res.json(data);
 	});
 }
 
-function getSubtitles(res) {
+function getSubtitles(req, res) {
 	subtitle.find({}, function(err) {
 		if (err) res.json.reject(err)
 	}).then(function(data){
@@ -19,23 +47,40 @@ function getSubtitles(res) {
 	});
 }
 
+function addLanguage(req, res) {
+    var newLanguage = new language({
+        name: req.body.name,
+        symbol: req.body.symbol
+    });
+
+    newLanguage.save(function(err) {
+        if (err) res.json.reject(err);
+        console.log('new language saved');
+    })
+}
+
+function addMovie(req, res) {
+    var newMovie = new Movie({
+        name: req.body.name,
+        imageUrl: req.body.imageUrl,
+        link: req.body.link,
+        language: req.body.language,
+        level: req.body.level,
+        viewsCount: req.body.viewsCount,
+        likesCount: req.body.likesCount,
+        category: req.body.category
+    });
+
+    newMovie.save(function(err) {
+        if (err) res.json.reject(err);
+        console.log('new movie saved');
+    })
+}
+
 function addSubtitle(req, res) {
-    var youtubeId = req.body.youtubeId;
-    var subtitles = req.body.subtitles;
-
-    if (!youtubeId) {
-        res.json.reject('bad params: youtubeId');
-        return;
-    }
-
-    if (!subtitles){
-        res.json.reject('bad params: subtitles');
-        return;
-    }
-
     var newSubtitle = new subtitle({
-        youtubeId: youtubeId,
-        subtitles: subtitles
+        youtubeId: req.body.youtubeId,
+        subtitles: req.body.subtitles
     });
 
     newSubtitle.save(function(err) {
@@ -44,6 +89,10 @@ function addSubtitle(req, res) {
     })
 }
 
+exports.getLanguages = getLanguages;
 exports.getMovies = getMovies;
 exports.getSubtitles = getSubtitles;
+
+exports.addLanguage = addLanguage;
+exports.addMovie = addMovie;
 exports.addSubtitle = addSubtitle;

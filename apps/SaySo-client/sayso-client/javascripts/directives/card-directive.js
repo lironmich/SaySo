@@ -7,7 +7,7 @@ angular.module('sayso')
                 image: '@',
                 category: '@',
                 title: '@',
-                languages: '@',
+                language: '@',
                 level: '@',
                 likes: '@',
                 views: '@'
