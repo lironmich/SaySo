@@ -2,10 +2,7 @@ var express      = require('express');
 var app          = express();                
 var bodyParser   = require('body-parser');
 var path 	     = require('path');
-//var favicon      = require('serve-favicon');
-//var logger 	     = require('morgan');
 var cookieParser = require('cookie-parser');
-var mongoose = require('mongoose');
 var session      = require('express-session');
 var passport = require('passport');
 var flash    = require('connect-flash');
@@ -13,7 +10,6 @@ var flash    = require('connect-flash');
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-
 
 app.use(cookieParser()); 
 app.use(bodyParser.json()); 
@@ -25,14 +21,11 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-
 // var router = express.Router();  
 var port = process.env.PORT || 8888;
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
-require('./routes/index')(app, passport); 
-//require('./routes/users')(app, passport); 
-//require('./routes/api')(app, passport);
+require('./routes/index')(app, passport);
 require('./routes/subapi')(app, passport);
 
 require('./config/passport')(passport);
@@ -73,4 +66,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-

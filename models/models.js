@@ -6,24 +6,24 @@ mongoose.connect('mongodb://lironmich:123456@ds061405.mongolab.com:61405/sayso-d
 var Schema = mongoose.Schema;
 
 var languageSchema = new Schema({
-    name: String,
-    symbol: String
+    symbol: { type: String, unique: true, required: true, lowercase: true },
+    name: { type: String, required: true }
 });
 
 var movieSchema = new Schema({
-    name: String,
-    imageUrl: String,
-    link: String,
-    language: String,
-    level: Number,
-    viewsCount: Number,
-    likesCount: Number,
-    category: String
+    youtubeId: { type: String, unique: true, required: true },
+    name: { type: String, required: true },
+    imageUrl: { type: String, required: true },
+    language: { type: String, required: true },
+    level: { type: Number, required: true },
+    viewsCount: { type: Number, required: true },
+    likesCount:{ type: Number, required: true },
+    category:  { type: String, required: true },
 });
 
 var subtitleSchema = new Schema({
-    youtubeId: String,
-    subtitles: {}
+    youtubeId: { type: String, unique: true, required: true },
+    subtitles: { type: Schema.Types.Mixed, required: true}
 });
 
 var Language = mongoose.model('Language', languageSchema);

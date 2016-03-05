@@ -1,8 +1,8 @@
 var models = require('./models');
 
 var language = models.Language;
-var movie = models.Movie;
-var subtitle = models.Subtitle;
+var Movie = models.Movie;
+var Subtitle = models.Subtitle;
 
 function getLanguages(req, res) {
     var findParams = {};
@@ -32,7 +32,7 @@ function getMovies(req, res) {
         findParams.language = language;
     }
 
-	movie.find(findParams, function(err) {
+	Movie.find(findParams, function(err) {
 		if (err) res.json.reject(err)
 	}).then(function(data){
 		res.json(data);
@@ -40,7 +40,7 @@ function getMovies(req, res) {
 }
 
 function getSubtitles(req, res) {
-	subtitle.find({}, function(err) {
+    Subtitle.find({}, function(err) {
 		if (err) res.json.reject(err)
 	}).then(function(data){
 		res.json(data);
@@ -54,9 +54,12 @@ function addLanguage(req, res) {
     });
 
     newLanguage.save(function(err) {
-        if (err) res.json.reject(err);
+        if (err) {
+            res.json.reject(err);
+            return;
+        }
         console.log('new language saved');
-    })
+    });
 }
 
 function addMovie(req, res) {
@@ -72,19 +75,25 @@ function addMovie(req, res) {
     });
 
     newMovie.save(function(err) {
-        if (err) res.json.reject(err);
+        if (err) {
+            res.json.reject(err);
+            return;
+        }
         console.log('new movie saved');
     })
 }
 
 function addSubtitle(req, res) {
-    var newSubtitle = new subtitle({
+    var newSubtitle = new Subtitle({
         youtubeId: req.body.youtubeId,
         subtitles: req.body.subtitles
     });
 
     newSubtitle.save(function(err) {
-        if (err) res.json.reject(err);
+        if (err) {
+            res.json.reject(err);
+            return;
+        }
         console.log('new subtitle saved');
     })
 }
