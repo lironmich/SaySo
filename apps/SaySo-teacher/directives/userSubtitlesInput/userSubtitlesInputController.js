@@ -1,6 +1,6 @@
 var app = angular.module('teacherApp');
 
-app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtParserService', 'SUBTITLES_URL', function($scope, $http, $q, srtParserService, SUBTITLES_URL) {
+app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtParserService', 'notificationService', 'SUBTITLES_URL', function($scope, $http, $q, srtParserService, notificationService, SUBTITLES_URL) {
     var xmlToJsonConverter = new X2JS();
 
     var getGoogleTranslateSubtitlesPromise = function(youtubeSubtitlesUrl, toLang) {
@@ -18,7 +18,7 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
             var xmlString = response.data;
             return xmlToJsonConverter.xml_str2json(xmlString);
         }, function () {
-            alert("Invalid url: " + url);
+            notificationService.error("Invalid url: " + url);
         });
     };
 
@@ -70,13 +70,13 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
 
     var canReadFile = function(file) {
         if (!isFileReaderSupported()) {
-            alert('File reader is not supported in this browser');
+            notificationService.error('File reader is not supported in this browser');
             return false;
         }
 
         if (!file ||
             getFileExtension(file) !== "srt") {
-            alert('You need to choose srt file');
+            notificationService.error('You need to choose srt file');
             return false;
         }
 
@@ -143,7 +143,7 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
             });
 
             if (subtitles.length === 0) {
-                alert('subtitle not found');
+                notificationService.error('subtitle not found', 'not matching subtitles for this youtube video and languages');
                 return;
             }
 
@@ -205,7 +205,7 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
         if (!isFinite(subtitle.from) ||
             !isFinite(subtitle.to)) {
 
-            alert('from, to: should be numbers');
+            notificationService.error('from, to: should be numbers');
             return;
         }
 

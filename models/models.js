@@ -11,18 +11,18 @@ var languageSchema = new Schema({
 });
 
 var movieSchema = new Schema({
-    youtubeId: { type: String, unique: true, required: true },
+    youtubeId: { type: String, unique: true, required: true, minlength: 11, maxlength: 11 },
     name: { type: String, required: true },
     imageUrl: { type: String, required: true },
-    language: { type: String, required: true },
-    level: { type: Number, required: true },
-    viewsCount: { type: Number, required: true },
-    likesCount:{ type: Number, required: true },
+    language: { type: String, required: true, minlength: 2, maxlength: 2 },
+    level: { type: Number, required: true, min: 0 },
+    viewsCount: { type: Number, required: true, min: 0 },
+    likesCount:{ type: Number, required: true, min: 0},
     category:  { type: String, required: true },
 });
 
 var subtitleSchema = new Schema({
-    youtubeId: { type: String, required: true },
+    youtubeId: { type: String, required: true, minlength: 11, maxlength: 11 },
     subtitles: { type: Schema.Types.Mixed, required: true}
 });
 

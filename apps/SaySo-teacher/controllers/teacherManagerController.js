@@ -1,6 +1,6 @@
 var app = angular.module('teacherApp');
 
-app.controller('teacherManager', ['$scope', '$http', function($scope, $http) {
+app.controller('teacherManager', ['$scope', '$http', 'notificationService', function($scope, $http, notificationService) {
     $scope.videoId = '';
     $scope.subtitles = {};
 
@@ -15,6 +15,29 @@ app.controller('teacherManager', ['$scope', '$http', function($scope, $http) {
         $http.post('/dbapi/addSubtitle', {
             youtubeId: videoId,
             subtitles: subtitles
+        }).then(function() {
+            notificationService.success('subtitle saved');
+        }, function(err) {
+            var data = err.data;
+
+            var header = 'failed in saving subtitle';
+            var body = '';
+
+            if (data &&
+                data.message &&
+                data.errors) {
+
+                header = data.message;
+
+                var errors = data.errors;
+                if (errors) {
+                    _.keys(errors).forEach(function (key) {
+                        body += key + ': ' + errors[key].message;
+                    });
+                }
+            }
+
+            notificationService.error(header, body);
         });
     }
 }]);

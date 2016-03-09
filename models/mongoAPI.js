@@ -6,7 +6,7 @@ var Subtitle = models.Subtitle;
 
 function getLanguages(req, res) {
     language.find(req.query, function(err) {
-        if (err) res.json.reject(err)
+        if (err) res.status(400).json(err);
     }).then(function(data){
         res.json(data);
     });
@@ -14,8 +14,8 @@ function getLanguages(req, res) {
 
 function getMovies(req, res) {
 	Movie.find(req.query, function(err) {
-		if (err) res.json.reject(err)
-	}).then(function(data){
+		if (err) res.status(400).json(err);
+    }).then(function(data){
 		res.json(data);
 	});
 }
@@ -36,10 +36,12 @@ function addLanguage(req, res) {
 
     newLanguage.save(function(err) {
         if (err) {
-            res.json.reject(err);
+            res.status(400).json(err);
             return;
         }
+
         console.log('new language saved');
+        res.json();
     });
 }
 
@@ -57,11 +59,13 @@ function addMovie(req, res) {
 
     newMovie.save(function(err) {
         if (err) {
-            res.json.reject(err);
+            res.status(400).json(err);
             return;
         }
+
         console.log('new movie saved');
-    })
+        res.json();
+    });
 }
 
 function addSubtitle(req, res) {
@@ -72,11 +76,13 @@ function addSubtitle(req, res) {
 
     newSubtitle.save(function(err) {
         if (err) {
-            res.json.reject(err);
+            res.status(400).json(err);
             return;
         }
+
         console.log('new subtitle saved');
-    })
+        res.json();
+    });
 }
 
 exports.getLanguages = getLanguages;
