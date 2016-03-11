@@ -39,7 +39,7 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
 
         for (var i = 0; i < sourceTexts.length; i++) {
             var sourceText = sourceTexts[i];
-            var targetText = targetTexts[i]
+            var targetText = targetTexts[i];
 
             var fromSecond = parseFloat(sourceText._start);
             var toSeconds = fromSecond + parseFloat(sourceText._dur);
@@ -131,7 +131,7 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
 
         $http.get(SUBTITLES_URL, {
             params: {
-                youtubeId: $scope.videoId,
+                youtubeId: $scope.videoId
             }
         }).then(function(response) {
             var data = response.data;
@@ -158,6 +158,7 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
 
         if (!youtubeSubtitlesUrl ||
             !isSubtitleLangsExists()) {
+            notificationService.error('youtube subtitles and languages should be filled');
             return;
         }
 
@@ -170,7 +171,7 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
             }
 
             fillSubtitlesFromGoogleTranslates(data[0], data[1]);
-        })
+        });
     };
 
     $scope.loadFromSrtFile = function() {
@@ -204,8 +205,12 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
 
         if (!isFinite(subtitle.from) ||
             !isFinite(subtitle.to)) {
+            notificationService.error('fields from and to', 'should be numbers');
+            return;
+        }
 
-            notificationService.error('from, to: should be numbers');
+        if (!subtitle.source) {
+            notificationService.error('field source', 'should exist');
             return;
         }
 
