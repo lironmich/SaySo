@@ -69,19 +69,49 @@ function addMovie(req, res) {
 }
 
 function addSubtitle(req, res) {
+    var youtubeId = req.body.youtubeId;
+    var subtitles = req.body.subtitles;
+
     var newSubtitle = new Subtitle({
-        youtubeId: req.body.youtubeId,
-        subtitles: req.body.subtitles
+        youtubeId: youtubeId,
+        subtitles: subtitles
     });
 
-    newSubtitle.save(function(err) {
-        if (err) {
-            res.status(400).json(err);
-            return;
-        }
+    Subtitle.find({ youtubeId: youtubeId }, function(err) {
+        if (err) res.status(400).json(err);
+    }).then(function(data){
+        var oldSubtitles = data.filter(function(model) {
+            return model.subtitles.sourceLang === subtitles.sourceLang &&
+                model.subtitles.targetLang === subtitles.targetLang;
+        });
 
-        console.log('new subtitle saved');
-        res.json();
+        if (oldSubtitles.length < 1) {
+            newSubtitle.save(function(err) {
+                if (err) {
+                    res.status(400).json(err);
+                    return;
+                }
+
+                console.log('new subtitle saved');
+                res.json();
+            });
+        } else if (oldSubtitles.length === 1) {
+            oldSubtitles[0].subtitles = newSubtitle.subtitles;
+            oldSubtitles[0].markModified('subtitles');
+            oldSubtitles[0].save(function(err) {
+                if (err) {
+                    res.status(400).json(err);
+                    return;
+                }
+
+                console.log('new subtitle updated');
+                res.json();
+            });
+        } else {
+            var err = 'db contains more than one matching subtitles';
+            console.log(err);
+            res.status(400).json(err);
+        }
     });
 }
 
