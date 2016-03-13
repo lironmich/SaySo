@@ -2,7 +2,9 @@ var mongoose = require('mongoose');
 var modelValidators = require('./modelValidators');
 
 // mongodb://<dbuser>:<dbpassword>@ds061405.mongolab.com:61405/sayso-dev
-mongoose.connect('mongodb://lironmich:123456@ds061405.mongolab.com:61405/sayso-dev');
+mongoose.connect('mongodb://lironmich:123456@ds061405.mongolab.com:61405/sayso-dev', function(err) {
+    console.log('failed connecting to db, message: ' + err.message);
+});
 
 var Schema = mongoose.Schema;
 
