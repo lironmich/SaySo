@@ -174,7 +174,8 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
         });
     };
 
-    $scope.loadFromSrtFile = function() {
+    /* Notice, this function is totally cleaning all subtitles and keeps only the source-subtitles from the current srt file */
+    $scope.uploadSourceFromSrtFile = function() {
         var action = function(subtitlesText) {
             $scope.$applyAsync(function() {
                 $scope.subtitles.text = subtitlesText;
@@ -184,13 +185,13 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
         readSrtFile(action);
     };
 
-    $scope.mergeFromSrtFile = function() {
-        var action = function(subtitlesText) {
+    $scope.uploadTargetFromSrtFile = function() {
+        var action = function(newSubtitlesText) {
             $scope.$applyAsync(function() {
                 $scope.subtitles.text.forEach(function(sourceSubtitle) {
-                    subtitlesText.forEach(function (targetSubtitle) {
-                        if (Math.abs(sourceSubtitle.from - targetSubtitle.from) < 0.5) {
-                            sourceSubtitle.target = targetSubtitle.source;
+                    newSubtitlesText.forEach(function (newTargetSubtitle) {
+                        if (Math.abs(sourceSubtitle.from - newTargetSubtitle.from) < 0.5) {
+                            sourceSubtitle.target = newTargetSubtitle.source;
                         }
                     });
                 });
@@ -199,6 +200,25 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
 
         readSrtFile(action);
     };
+
+    /* the $scope.subtitles.text is an array, and for each element it has the variables:
+    *    .source ,  .target,  .transcript  , .from (in seconds) and .to  (in seconds)*/
+
+    $scope.uploadTranscriptFromSrtFile = function uploadTranscriptFromSrtFile() {
+        var action = function(newSubtitlesText) {
+            $scope.$applyAsync(function() {
+                $scope.subtitles.text.forEach(function(sourceSubtitle) {
+                    newSubtitlesText.forEach(function (newTranscriptSubtitle) {
+                        if (Math.abs(sourceSubtitle.from - newTranscriptSubtitle.from) < 0.5) {
+                            sourceSubtitle.transcript = newTranscriptSubtitle.source;
+                        }
+                    });
+                });
+            });
+        };
+
+        readSrtFile(action);
+    }
 
     $scope.addManualSubtitle = function() {
         var subtitle = $scope.manualSubtitle;

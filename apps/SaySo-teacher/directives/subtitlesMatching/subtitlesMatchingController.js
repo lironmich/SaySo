@@ -2,6 +2,9 @@ var app = angular.module('teacherApp');
 
 app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', function($scope, NgTableParams) {
 
+    $scope.assignedKey = null;//not valid yet
+    var numOfColorsPerPrimary = 4;
+
     var findMatchesEntry = function(propertyName) {
         if (propertyName === 'source') {
             return 0;
@@ -15,13 +18,22 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
     };
 
     var convertNumberToColor = function(number) {
-        var red = number % 256;
-        number = Math.round(number / 256);
+        var multipleColorBy = Math.floor(255/(numOfColorsPerPrimary-1)); //85 for 4 colors, 64 for 5 colors
 
-        var green = number % 256;
-        number = Math.round(number / 256);
 
-        var blue = number % 256;
+        var red = multipleColorBy * (number % numOfColorsPerPrimary); // 85 * (number % 4) , so between 0 and 255
+
+        number = Math.round(number / numOfColorsPerPrimary); // (number / 4)
+        var green = multipleColorBy * (number % numOfColorsPerPrimary); // 85 * (number % 4)
+
+        number = Math.round(number / numOfColorsPerPrimary);
+        var blue = multipleColorBy * (number % numOfColorsPerPrimary);
+
+        if (red > 250 && green > 250 && blue > 250) {
+            red = 210; green = 210; blue = 210;//safety for case of problem with already existing values
+        } else if (red > 250 && green > 250) {
+            green = 210; //Against yellow color which is hard to see
+        }
 
         return 'rgb(' + red + ', ' + green + ', ' + blue + ')';
     };
@@ -91,8 +103,22 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
     }, true);
 
     $scope.generateAssignedKey = function() {
-        var rand = Math.random().toString().slice(2);
-        $scope.assignedKey = parseInt(rand) ;
+        var myPrime = 47;
+        var  maxKey = Math.pow(numOfColorsPerPrimary, 3); //64 for 4 colors, 125 for 5 colors
+
+        if ($scope.assignedKey === null) {
+            $scope.assignedKey = Math.floor(Math.random() * (maxKey-1)); // between 0 and 62 (63 is white so not allowed because text font is white)
+        } else {
+            $scope.assignedKey = ($scope.assignedKey + myPrime) % maxKey;
+        }
+
+        if ($scope.assignedKey === (maxKey - 1)) {
+            // 63 which is white is not allowed because text font is white, so get next one
+            $scope.assignedKey = ($scope.assignedKey + myPrime) % maxKey;
+        }
+
+        //var rand = Math.random().toString().slice(2);
+        //$scope.assignedKey = parseInt(rand) ;
     };
 
     $scope.generateAssignedKey();
