@@ -105,21 +105,23 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
     $scope.generateAssignedKey = function() {
         var myPrime = 47;
         var  maxKey = Math.pow(numOfColorsPerPrimary, 3); //64 for 4 colors, 125 for 5 colors
+        var newKey;
 
         if ($scope.assignedKey === null) {
-            $scope.assignedKey = Math.floor(Math.random() * (maxKey-1)); // between 0 and 62 (63 is white so not allowed because text font is white)
+            newKey = Math.floor(Math.random() * (maxKey-1)); // between 0 and 62 (63 is white so not allowed because text font is white)
         } else {
-            $scope.assignedKey = ($scope.assignedKey + myPrime) % maxKey;
+            newKey = ($scope.assignedKey + myPrime) % maxKey;
         }
 
-        if ($scope.assignedKey === (maxKey - 1) || ($scope.assignedKey === 29 && numOfColorsPerPrimary === 4)) {
+        if (newKey === (maxKey - 1) || (newKey === 29 && numOfColorsPerPrimary === 4)) {
             // 63 which is white is not allowed because text font is white, so get next one
             // 29 is not allow (in case of 0-63) because it's a green that comes after almost similar green
-            $scope.assignedKey = ($scope.assignedKey + myPrime) % maxKey;
+            newKey = (newKey + myPrime) % maxKey;
         }
 
-        //var rand = Math.random().toString().slice(2);
-        //$scope.assignedKey = parseInt(rand) ;
+        var rand = Math.random().toString().slice(5);//remove the '0.' and 3 extra digits to keep space for the relevant color code
+        $scope.assignedKey = (maxKey * parseInt(rand)) + newKey;
+        console.log($scope.assignedKey);
     };
 
     $scope.generateAssignedKey();
