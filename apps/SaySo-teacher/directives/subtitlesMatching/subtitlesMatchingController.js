@@ -112,8 +112,9 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
             $scope.assignedKey = ($scope.assignedKey + myPrime) % maxKey;
         }
 
-        if ($scope.assignedKey === (maxKey - 1)) {
+        if ($scope.assignedKey === (maxKey - 1) || ($scope.assignedKey === 29 && numOfColorsPerPrimary === 4)) {
             // 63 which is white is not allowed because text font is white, so get next one
+            // 29 is not allow (in case of 0-63) because it's a green that comes after almost similar green
             $scope.assignedKey = ($scope.assignedKey + myPrime) % maxKey;
         }
 
