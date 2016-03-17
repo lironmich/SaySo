@@ -86,7 +86,6 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         }
     };
 
-    var _assingKey =
 
     $scope.$watch('subtitles.text', function(newValue, oldValue) {
         if (!newValue) {
@@ -119,7 +118,7 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
             newKey = (newKey + myPrime) % maxKey;
         }
 
-        var rand = Math.random().toString().slice(5);//remove the '0.' and 3 extra digits to keep space for the relevant color code
+        var rand = Math.random().toString().slice(2);//remove the '0.' ////////////// and 3 extra digits to keep space for the relevant color code
         $scope.assignedKey = (maxKey * parseInt(rand)) + newKey;
         console.log($scope.assignedKey);
     };
