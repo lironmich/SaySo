@@ -103,13 +103,13 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
 
     $scope.generateAssignedKey = function() {
         var myPrime = 47;
-        var  maxKey = Math.pow(numOfColorsPerPrimary, 3); //64 for 4 colors, 125 for 5 colors
+        var maxKey = Math.pow(numOfColorsPerPrimary, 3); //64 for 4 colors, 125 for 5 colors
         var newKey;
 
         if ($scope.assignedKey === null) {
-            newKey = Math.floor(Math.random() * (maxKey-1)); // between 0 and 62 (63 is white so not allowed because text font is white)
+            newKey = Math.floor(Math.random() * (maxKey - 1)); // between 0 and 62 (63 is white so not allowed because text font is white)
         } else {
-            newKey = ($scope.assignedKey + myPrime) % maxKey;
+            newKey = (($scope.assignedKey % maxKey) + myPrime) % maxKey;
         }
 
         if (newKey === (maxKey - 1) || (newKey === 29 && numOfColorsPerPrimary === 4)) {
@@ -118,8 +118,14 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
             newKey = (newKey + myPrime) % maxKey;
         }
 
-        var rand = Math.random().toString().slice(2);//remove the '0.' ////////////// and 3 extra digits to keep space for the relevant color code
+        var rand = Math.random().toString().slice(2); //remove the '0.' and 3 extra digits to keep space for the relevant color code
+        if (rand.length > 5) {
+            rand = rand.slice(3);
+        }
         $scope.assignedKey = (maxKey * parseInt(rand)) + newKey;
+        if ($scope.assignedKey === 0) {
+            console.log("rand is " + rand);
+        }
         console.log($scope.assignedKey);
     };
 
