@@ -21,9 +21,26 @@ function getMovies(req, res) {
 }
 
 function getSubtitles(req, res) {
-    Subtitle.find(req.query, function(err) {
+    var query = {};
+
+    var youtubeId = req.query.youtubeId;
+    var sourceLang = req.query.sourceLang;
+    var targetLang = req.query.targetLang;
+
+    if (youtubeId) {
+        query.youtubeId = req.query.youtubeId;
+    }
+
+    var isSubtitleMatch = function(subtitle) {
+        return (!sourceLang || subtitle.subtitles.sourceLang === sourceLang) &&
+            (!targetLang || subtitle.subtitles.targetLang === targetLang)
+    };
+
+    Subtitle.find(query, function(err) {
 		if (err) res.json.reject(err)
 	}).then(function(data){
+        data = data.filter(isSubtitleMatch);
+
 		res.json(data);
 	});
 }

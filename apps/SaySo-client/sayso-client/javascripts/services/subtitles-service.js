@@ -6,23 +6,6 @@ angular.module('sayso')
             var cache = $cacheFactory('subtitlesService');
 
             /**
-             * Converts string "00:00:00,000 --> 00:01:05,123" to array of numbers [0, 65.123]
-             *
-             * @param {String} t string representation of time range
-             * @returns {Array} array of numbers representing start time and end time
-             */
-            function time(t) {
-                return t.replace(/,/g, '.').split(' --> ').map(function(time) {
-                    return time
-                        .split(':')
-                        .reverse()
-                        .reduce(function(previousValue, currentValue, index) {
-                            return previousValue + (parseFloat(currentValue) * Math.pow(60, index));
-                        }, 0);
-                });
-            }
-
-            /**
              * Wraps each word in subtitles, transcription and translation strings with &lt;span&gt;
              * that has a class corresponding to group name according to mapping
              *
@@ -61,13 +44,27 @@ angular.module('sayso')
                 });
             }
 
-            function loadSubtitles(query, language, translation) {
+            function loadSubtitles(youtubeId, language, translation) {
                 var deferred = $q.defer();
                 $http
-                    .get(SUBTITLES_URL + query)
+                    .get(SUBTITLES_URL, {
+                        params: {
+                            youtubeId: youtubeId,
+                            sourceLang: language,
+                            targetLang: translation
+                        }
+                    })
                     .then(function(response) {
-                        deferred.resolve(response.data.map(function(block) {
-                            return formatBlock(block,language, translation);
+                        var data = response.data;
+                        var subtitles = _.pluck(data, 'subtitles');
+
+                        if (!subtitles || subtitles.length !== 1) {
+                            console.log('subtitles not found');
+                            return;
+                        }
+
+                        deferred.resolve(subtitles[0].text.map(function(block) {
+                            return formatBlock(block);
                         }));
                     })
                     .catch(function(err) {
@@ -84,57 +81,27 @@ angular.module('sayso')
                     }) && value;
             }
 
-            function formatBlock(block, language, translation) {
-                var t, l, m, w;
+            function formatBlock(block) {
+                var t = [block.from, block.to];
+                var l = [block.source, block.transcript, block.target];
+                var m = _.values(block.match);
 
-                if (block.t && block.l && block.m) {
-                    return {
-                        t: time(block.t),
-                        l: markup(block.l, block.m),
-                        m: block.m
-                    };
-                } else if (Object.keys(block).length === 4 && block.couplings) {
-                    t = Object.keys(block[language])[0];
-                    l = [
-                        block[language][t],
-                        block[language + '_tr_' + translation][t],
-                        block[translation][t]
-                    ];
-                    w = [l[0].replace(/[^\w\sא-ת]|_/g, '').split(/\s+/gm), l[2].replace(/[^\w\sא-ת]|_/g, '').split(/\s+/gm)];
-                    m = block.couplings.map(function(triple) {
-                        return w.map(function(words, idx) {
-                            return triple[idx].split(/\s+/gm).map(function(word) {
-                                return words.indexOf(word.replace(/[^\w\sא-ת]|_/g, ''))
-                            });
-                        });
-                    });
-                    return {
-                        t: time(t),
-                        l: markup(l, m),
-                        m: m
-                    };
-                } else {
-                    $log.warn('Block ' + JSON.stringify(block) + ' does not match any of supported formats and will be ignored');
-                    return {
-                        t: [-1, -1],
-                        l: ['', '', ''],
-                        m: []
-                    }
-                }
+                return {
+                    t: t,
+                    l: markup(l, m),
+                    m: m
+                };
             }
 
-            function getSubtitles(name, language, translation, time) {
-                var deferred,
-                    query,
-                    data;
+            function getSubtitles(youtubeId, language, translation, time) {
+                var deferred = $q.defer();
 
-                deferred = $q.defer();
-                query = '?n=' + name + '&l=' + language + ',' + translation;
-                data = cache.get(query);
+                var cacheId = youtubeId + language + translation;
+                var data = cache.get(cacheId);
 
                 if (data && data.then) {
                     data.then(function(d) {
-                        cache.put(query, d);
+                        cache.put(cacheId, d);
                         deferred.resolve(findByTime(d, time));
                     }).catch(function(err) {
                         deferred.reject(err);
@@ -142,8 +109,8 @@ angular.module('sayso')
                 } else if (data) {
                     deferred.resolve(findByTime(data, time));
                 } else {
-                    cache.put(query, loadSubtitles(query, language, translation).then(function(d) {
-                        cache.put(query, d);
+                    cache.put(cacheId, loadSubtitles(youtubeId, language, translation).then(function(d) {
+                        cache.put(cacheId, d);
                         deferred.resolve(findByTime(d, time));
                     }));
                 }

@@ -131,18 +131,15 @@ app.controller('userSubtitlesInputController', ['$scope', '$http', '$q', 'srtPar
 
         $http.get(SUBTITLES_URL, {
             params: {
-                youtubeId: $scope.videoId
+                youtubeId: $scope.videoId,
+                sourceLang: sourceLang,
+                targetLang: targetLang
             }
         }).then(function(response) {
             var data = response.data;
             var subtitles = _.pluck(data, 'subtitles');
 
-            subtitles = _.filter(subtitles, function(subtitle) {
-               return subtitle.sourceLang === sourceLang &&
-                   subtitle.targetLang === targetLang;
-            });
-
-            if (subtitles.length === 0) {
+            if (!subtitles || subtitles.length !== 1) {
                 notificationService.error('subtitle not found', 'not matching subtitles for this youtube video and languages');
                 return;
             }

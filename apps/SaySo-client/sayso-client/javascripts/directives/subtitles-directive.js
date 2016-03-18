@@ -4,7 +4,7 @@ angular.module('sayso')
             templateUrl: 'apps/SaySo-client/sayso-client/partials/subtitles.html',
             restrict: 'E',
             scope: {
-                name: '=',
+                youtubeId: '=',
                 subtitles: '=',
                 translation: '='
             },
@@ -17,14 +17,10 @@ angular.module('sayso')
 
                 // Initial values
                 scope.transcription = false;
-                subtitlesService.getSubtitles(scope.name, scope.subtitles, scope.translation, 0)
-                    .then(function(data) {
-                        scope.l = data.l;
-                    });
 
                 // Subscribe to time changes
                 videoService.onTimeUpdate(attr.mediagroup, function(time) {
-                    subtitlesService.getSubtitles(scope.name, scope.subtitles, scope.translation, time)
+                    subtitlesService.getSubtitles(scope.youtubeId, scope.subtitles, scope.translation, time)
                         .then(function(data) {
                             scope.l = data.l;
                         });

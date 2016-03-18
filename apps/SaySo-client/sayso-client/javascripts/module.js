@@ -1,6 +1,6 @@
 angular.module('sayso', ['ngRoute', 'ngSanitize'])
     .constant('MOVIES_URL', '/dbapi/movies')
-    .constant('SUBTITLES_URL', '/rdata/subtitle')
+    .constant('SUBTITLES_URL', '/dbapi/subtitles')
     .config(['$routeProvider', function($routeProvider) {
         $routeProvider
             .when('/', {
