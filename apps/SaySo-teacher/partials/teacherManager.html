@@ -18,7 +18,8 @@
         <subtitles-matching subtitles="subtitles">
         </subtitles-matching>
 
-        <button ng-click="saveSubtitles()">
+        <button ng-disabled="savingSubtitles"
+                ng-click="saveSubtitles()">
             save
         </button>
     </div>

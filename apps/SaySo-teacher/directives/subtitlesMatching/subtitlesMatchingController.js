@@ -20,7 +20,6 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
     var convertNumberToColor = function(number) {
         var multipleColorBy = Math.floor(255/(numOfColorsPerPrimary-1)); //85 for 4 colors, 64 for 5 colors
 
-
         var red = multipleColorBy * (number % numOfColorsPerPrimary); // 85 * (number % 4) , so between 0 and 255
 
         number = Math.round(number / numOfColorsPerPrimary); // (number / 4)
@@ -123,10 +122,6 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
             rand = rand.slice(3);
         }
         $scope.assignedKey = (maxKey * parseInt(rand)) + newKey;
-        if ($scope.assignedKey === 0) {
-            console.log("rand is " + rand);
-        }
-        console.log($scope.assignedKey);
     };
 
     $scope.generateAssignedKey();

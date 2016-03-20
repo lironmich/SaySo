@@ -22,7 +22,9 @@ angular.module('sayso')
                 videoService.onTimeUpdate(attr.mediagroup, function(time) {
                     subtitlesService.getSubtitles(scope.youtubeId, scope.subtitles, scope.translation, time)
                         .then(function(data) {
-                            scope.l = data.l;
+                            if (data) {
+                                scope.l = data.l;
+                            }
                         });
                 });
             }

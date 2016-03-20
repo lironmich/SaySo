@@ -85,13 +85,35 @@ function addMovie(req, res) {
     });
 }
 
+function getMinifiedSubtitles(subtitles) {
+    if (!subtitles) {
+        return null;
+    }
+
+    subtitles.text.forEach(function(_text) {
+        var match = _text.match;
+
+        for (var key in match) {
+            var value = match[key];
+
+            if (value[0].length === 0 &&
+                value[1].length === 0 &&
+                value[2].length === 0) {
+                delete match[key];
+            }
+        }
+    });
+
+    return subtitles;
+}
+
 function addSubtitle(req, res) {
     var youtubeId = req.body.youtubeId;
     var subtitles = req.body.subtitles;
 
     var newSubtitle = new Subtitle({
         youtubeId: youtubeId,
-        subtitles: subtitles
+        subtitles: getMinifiedSubtitles(subtitles)
     });
 
     Subtitle.find({ youtubeId: youtubeId }, function(err) {

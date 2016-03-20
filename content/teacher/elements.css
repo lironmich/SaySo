@@ -18,3 +18,8 @@ button:active {
 button:focus {
     outline: 0;
 }
+
+button[disabled] {
+    pointer-events: none;
+    opacity: 0.5;
+}

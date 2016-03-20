@@ -3,6 +3,7 @@ var app = angular.module('teacherApp');
 app.controller('teacherManager', ['$scope', '$http', 'notificationService', function($scope, $http, notificationService) {
     $scope.videoId = '';
     $scope.subtitles = {};
+    $scope.savingSubtitles = false;
 
     $scope.saveSubtitles = function() {
         var videoId = $scope.videoId;
@@ -11,6 +12,8 @@ app.controller('teacherManager', ['$scope', '$http', 'notificationService', func
         if (!videoId || !subtitles) {
             return;
         }
+
+        $scope.savingSubtitles = true;
 
         $http.post('/dbapi/addSubtitle', {
             youtubeId: videoId,
@@ -38,6 +41,8 @@ app.controller('teacherManager', ['$scope', '$http', 'notificationService', func
             }
 
             notificationService.error(header, body);
+        }).finally(function() {
+            $scope.savingSubtitles = false;
         });
     }
 }]);
