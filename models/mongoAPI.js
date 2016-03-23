@@ -107,13 +107,32 @@ function getMinifiedSubtitles(subtitles) {
     return subtitles;
 }
 
+function getSubtitlesWithoutNewLines(subtitles) {
+    if (!subtitles) {
+        return null;
+    }
+
+    subtitles.text.forEach(function(_text) {
+        _text.source = _text.source.replace('\n', ' ');
+        _text.target = _text.target.replace('\n', ' ');
+        _text.transcript = _text.transcript.replace('\n', ' ');
+    });
+
+    return subtitles;
+}
+
+function getNormalizedSubtitles(subtitles) {
+    subtitles = getMinifiedSubtitles(subtitles);
+    return getSubtitlesWithoutNewLines(subtitles);
+}
+
 function addSubtitle(req, res) {
     var youtubeId = req.body.youtubeId;
     var subtitles = req.body.subtitles;
 
     var newSubtitle = new Subtitle({
         youtubeId: youtubeId,
-        subtitles: getMinifiedSubtitles(subtitles)
+        subtitles: getNormalizedSubtitles(subtitles)
     });
 
     Subtitle.find({ youtubeId: youtubeId }, function(err) {
