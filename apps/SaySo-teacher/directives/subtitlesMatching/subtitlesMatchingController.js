@@ -85,7 +85,6 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         }
     };
 
-
     $scope.$watch('subtitles.text', function(newValue, oldValue) {
         if (!newValue) {
             return;
@@ -156,7 +155,7 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         return text.trim().split(' ');
     };
 
-    var assignKey = function(text, propertyName, index) {
+    var assignKey = function(text, propertyName, index, removeIfSame) {
         /*  assigned key => [source indexes, target indexes, transcript indexes]
          int => [int[], int[], int] */
         text.match = text.match || {};
@@ -175,6 +174,11 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
             matchDict[key][matchesEntry].push(index);
         }
 
+        if (!removeIfSame &&
+            key === prevAssignedKey) {
+            return;
+        }
+
         // Remove previous key
         if (prevAssignedKey) {
             var prevValue = matchDict[prevAssignedKey][matchesEntry];
@@ -188,7 +192,7 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
         var tableIndex = $scope.getTableIndex(parentIndex);
         var text = $scope.subtitles.text[tableIndex];
 
-        assignKey(text, propertyName, index);
+        assignKey(text, propertyName, index, true);
     };
 
     $scope.getWordStyle = function(propertyName, parentIndex, index) {
@@ -236,16 +240,22 @@ app.controller('subtitlesMatchingController', ['$scope', 'NgTableParams', functi
                 continue;
             }
 
-            text.match = null;
-
             for (var j = 0; j < sourceWords.length; j++) {
                 var index = direction ? j : sourceWords.length - 1 - j;
 
-                $scope.generateAssignedKey();
+                var sourceAssignedKey = getAssignedKey(text.match, 'source', j)
+                if (sourceAssignedKey) {
+                    $scope.assignedKey = sourceAssignedKey;
+                } else {
+                    $scope.generateAssignedKey();
+                }
 
                 assignKey(text, 'source', j);
                 assignKey(text, 'transcript', index);
             }
+
+            $scope.generateAssignedKey();
+            $scope.$applyAsync();
         }
     };
 }]);
