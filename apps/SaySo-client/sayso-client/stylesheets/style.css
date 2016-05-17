@@ -804,11 +804,13 @@ subtitles {
         border: none;
         box-shadow: inset 0 2px 3px rgba(92, 92, 92, 0.5);
     }
+    .list-view .languages,
     .list-view .order-by,
     .list-view .categories {
         width: 100%;
         margin: 0;
     }
+    .list-view .languages > h3,
     .list-view .order-by > h3,
     .list-view .categories > h3 {
         font-family: 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
@@ -819,6 +821,12 @@ subtitles {
         border-top: 1px solid rgb(219, 219, 219);
         text-shadow: 0 1px 0 white;
     }
+
+    .list-view .languages > div {
+        padding: 0.5em 0.75em;
+        margin-top: 50px;
+    }
+
     .list-view .order-by > ul,
     .list-view .categories > ul {
         margin: 0;

@@ -20,6 +20,128 @@ function getMovies(req, res) {
 	});
 }
 
+//Smartly gets movies either based on language (of film)
+// or by existing translations with sourceLang+targetLang if targetLand is defined
+function getMoviesPerLanguages(req, res) {
+    var moviesQuery = req.query;
+    var subtitlesQuery = {};
+    var sourceLang = req.query.sourceLang;
+    var targetLang = req.query.targetLang;
+    delete moviesQuery.sourceLang;//because no such property in the movie table
+    delete moviesQuery.targetLang;//because no such property in the movie table
+
+    var isSubtitleMatch = function(subtitle) {
+        return (!sourceLang || subtitle.subtitles.sourceLang === sourceLang) &&
+            (!targetLang || subtitle.subtitles.targetLang === targetLang)
+    };
+
+    if (!targetLang) {
+        if (sourceLang) {
+            //if only sourceLang is defined, then search for it only based on the film's language property
+            // and not by available subtitles
+            moviesQuery.language = sourceLang;
+        }
+        Movie.find(req.query, function(err) {
+            if (err) res.status(400).json(err);
+        }).then(function(data){
+            res.json(data);
+        });
+
+    } else {
+        //Search for appropriate translations and get the movies by the relevant youtubeId
+
+        Subtitle.find(subtitlesQuery, 'youtubeId subtitles.sourceLang subtitles.targetLang', function (err) {
+            if (err) res.json.reject(err)
+        }).then(function (data) {
+            data = data.filter(isSubtitleMatch);
+            var youtubeIDs = data.map(function (item) {
+                return item['youtubeId'];
+            });
+            //console.log("youtubeIDs" + youtubeIDs);/////
+
+            //console.log("moviesQuery before: " + JSON.stringify(moviesQuery));
+            //now we have all youtubeIds that matches the required translation, so we can bring the actual movies
+            moviesQuery.youtubeId = {$in: youtubeIDs};
+
+
+            //console.log("moviesQuery after: " + JSON.stringify(moviesQuery));/////
+            Movie.find(moviesQuery, function (err) {
+                if (err) res.status(400).json(err);
+            }).then(function (data2) {
+                res.json(data2);
+            });
+
+
+        });
+    }
+
+}
+
+function getMoviesPerTranslations(req, res) {
+    var moviesQuery = req.query;
+    var subtitlesQuery = {};
+    var sourceLang = req.query.sourceLang;
+    var targetLang = req.query.targetLang;
+
+    var isSubtitleMatch = function(subtitle) {
+        return (!sourceLang || subtitle.subtitles.sourceLang === sourceLang) &&
+            (!targetLang || subtitle.subtitles.targetLang === targetLang)
+    };
+
+    Subtitle.find(subtitlesQuery, 'youtubeId subtitles.sourceLang subtitles.targetLang', function(err) {
+        if (err) res.json.reject(err)
+    }).then(function(data){
+        data = data.filter(isSubtitleMatch);
+        var youtubeIDs = data.map(function(item) {
+            return item['youtubeId'];
+        });
+        //console.log("youtubeIDs" + youtubeIDs);/////
+
+        //console.log("moviesQuery before: " + JSON.stringify(moviesQuery));
+        //now we have all youtubeIds that matches the required translation, so we can bring the actual movies
+        moviesQuery.youtubeId = {$in: youtubeIDs};
+        delete moviesQuery.sourceLang;
+        delete moviesQuery.targetLang;
+
+        //console.log("moviesQuery after: " + JSON.stringify(moviesQuery));/////
+        Movie.find(moviesQuery, function(err) {
+            if (err) res.status(400).json(err);
+        }).then(function(data2){
+            res.json(data2);
+        });
+
+
+    });
+
+
+}
+
+function getYoutubeIdsPerLanguages(req, res) {
+    var query = {};
+    var sourceLang = req.query.sourceLang;
+    var targetLang = req.query.targetLang;
+
+    var isSubtitleMatch = function(subtitle) {
+        return (!sourceLang || subtitle.subtitles.sourceLang === sourceLang) &&
+            (!targetLang || subtitle.subtitles.targetLang === targetLang)
+    };
+
+    Subtitle.find(query, 'youtubeId subtitles.sourceLang subtitles.targetLang', function(err) {
+    //Subtitle.find(query, 'youtubeId', function(err) {
+        if (err) res.json.reject(err)
+    }).then(function(data){
+        data = data.filter(isSubtitleMatch);
+        var youtubeIDs = data.map(function(item) {
+            return item['youtubeId'];
+        });
+        //console.log(youtubeIDs);
+        res.json(youtubeIDs);
+        //res.json(data);//maybe youtubeIDs instead of data (to return only youtubeIDs)
+    });
+
+
+}
+
 function getSubtitles(req, res) {
     var query = {};
 
@@ -176,6 +298,8 @@ function addSubtitle(req, res) {
 exports.getLanguages = getLanguages;
 exports.getMovies = getMovies;
 exports.getSubtitles = getSubtitles;
+exports.getYoutubeIdsPerLanguages = getYoutubeIdsPerLanguages;
+exports.getMoviesPerLanguages = getMoviesPerLanguages;
 
 exports.addLanguage = addLanguage;
 exports.addMovie = addMovie;

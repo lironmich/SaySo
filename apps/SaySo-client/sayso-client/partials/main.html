@@ -44,6 +44,21 @@
                        ng-keypress="main.searchKeyPress($event)"
                        ng-blur="main.searchBlur()">
             </div>
+            <nav class="languages" ng-class="{'xs-hide': !main.isListVisible}">
+                <h3>Languages <span ng-hide="main.isListVisible">&gt;&gt;</span></h3>
+                <div><span>Film Language: </span>
+
+                    <select ng-model="main.selectedSourceLanguage"
+                            ng-options="availableLanguages for availableLanguages in main.availableLanguages"
+                            ng-change="main.getMovies()" ></select>
+                </div>
+                <div><span>Translation Language: </span>
+                    <select ng-model="main.selectedTargetLanguage"
+                            ng-options="availableLanguages for availableLanguages in main.availableLanguages"
+                            ng-change="main.getMovies()" > </select>
+                </div>
+
+            </nav>
             <nav class="order-by" ng-class="{'xs-hide': !main.isListVisible}">
                 <h3>SORT BY <span ng-hide="main.isListVisible">&gt;&gt;</span></h3>
                 <ul>

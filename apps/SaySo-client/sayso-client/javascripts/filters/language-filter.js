@@ -3,7 +3,10 @@ angular.module('sayso')
         var map = {
             'he': 'Hebrew',
             'en': 'English',
-            'es': 'Spanish'
+            'es': 'Spanish',
+            'fr': 'French',
+            'ru': 'Russian'
+
         };
 
         return function(input) {

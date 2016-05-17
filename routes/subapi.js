@@ -41,6 +41,21 @@ module.exports = function(app) {
         mongoAPI.getSubtitles(req, res);
     });
 
+    app.route('/dbapi/youtubeIdsPerLanguages').get(function(req, res) {
+        mongoAPI.getYoutubeIdsPerLanguages(req, res);
+    });
+    //Smart function that brings either based on movie language, or by translation languages (if targetLang is passed)
+    app.route('/dbapi/moviesPerLanguages').get(function(req, res) {
+        mongoAPI.getMoviesPerLanguages(req, res);
+    });
+    //only for testings
+    app.route('/dbapi/moviesPerTranslations').get(function(req, res) {
+        mongoAPI.getMoviesPerTranslations(req, res);
+    });
+
+
+
+
     app.route('/dbapi/addLanguage').post(function(req, res) {
         mongoAPI.addLanguage(req, res);
     });

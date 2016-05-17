@@ -17,6 +17,10 @@ angular.module('sayso')
             this.isListVisible = !!$routeParams.list;
             this.search = $routeParams.search;
 
+            this.selectedSourceLanguage = '';
+            this.selectedTargetLanguage = '';
+            this.availableLanguages = ['', 'English', 'Hebrew', 'French', 'Russian', 'Arabic', 'en', 'he', 'ru', 'ar'];
+
             // Autoplay video if popover is opened
             if(this.isPopoverVisible) {
                 videoService.play('sayso');
@@ -28,24 +32,27 @@ angular.module('sayso')
             });
 
             // Get Movies
-            moviesService.getMovies().then(function(movies) {
-                var movieName;
-                movieName = $routeParams.popover;
-                vm.movies = vm.selectedCategories.length === 0 ? movies : movies.filter(function(movie) {
-                    return vm.selectedCategories.indexOf(movie.category) >= 0;
+            this.getMovies = function() {
+                moviesService.getMovies(vm.selectedSourceLanguage, vm.selectedTargetLanguage).then(function (movies) {
+                    var movieName;
+                    movieName = $routeParams.popover;
+                    vm.movies = vm.selectedCategories.length === 0 ? movies : movies.filter(function (movie) {
+                        return vm.selectedCategories.indexOf(movie.category) >= 0;
+                    });
+                    if (vm.orderBySelectedOption) {
+                        vm.movies = vm.movies.sort(vm.orderBySelectedOption.comparator);
+                    }
+                    if (vm.isPopoverVisible) {
+                        vm.popoverMovie = movies.reduce(function (found, movie) {
+                            if (!found && (movie.name === movieName)) {
+                                found = movie;
+                            }
+                            return found;
+                        }, null);
+                    }
                 });
-                if(vm.orderBySelectedOption) {
-                    vm.movies = vm.movies.sort(vm.orderBySelectedOption.comparator);
-                }
-                if (vm.isPopoverVisible) {
-                    vm.popoverMovie = movies.reduce(function(found, movie) {
-                        if (!found && (movie.name === movieName)) {
-                            found = movie;
-                        }
-                        return found;
-                    }, null);
-                }
-            });
+            };
+            vm.getMovies();
 
             // Search
             this.searchKeyPress = function(event) {

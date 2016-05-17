@@ -56,7 +56,7 @@ angular.module('sayso')
                     })
                     .then(function(response) {
                         var data = response.data;
-                        var subtitles = _.pluck(data, 'subtitles');
+                        var subtitles = _.pluck(data, 'subtitles');// get an array of subtitles properties of the data map
 
                         if (!subtitles || subtitles.length !== 1) {
                             console.log('subtitles not found');
@@ -73,6 +73,34 @@ angular.module('sayso')
                     });
                 return deferred.promise;
             }
+
+            function getYoutubeIDsPerLanguages(language, translation) {
+                var deferred = $q.defer();
+                $http
+                    .get(SUBTITLES_URL, {
+                        params: {
+                            sourceLang: language,
+                            targetLang: translation
+                        }
+                    })
+                    .then(function(response) {
+                        var data = response.data;
+                        var suitableYoutubeIDs = _.pluck(data, 'youtubeId');// get an array of youtubeId properties of the data map
+
+                        if (!subtitles || subtitles.length !== 1) {
+                            console.log("Didn't fine movies with suitable languages from " + language + " to " + translation);
+                            return;
+                        }
+
+                        deferred.resolve(suitableYoutubeIDs);//returns array of suitable youtubeIDs
+                    })
+                    .catch(function(err) {
+                        $log.error('Failed to load subtitles due to the following error: ' + err.message);
+                        deferred.reject(err);
+                    });
+                return deferred.promise;
+            }
+
 
             function findByTime(data, time) {
                 var value;
